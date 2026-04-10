@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "motion/react";
 import { LabCard } from "../LabCard";
+import { TextReveal } from "@/src/components/ui/text-reveal";
 import type { LabItem } from "../types";
 
 const labItems: LabItem[] = [
@@ -75,15 +76,7 @@ export const LabSection = React.memo(function LabSection() {
   return (
     <section id="lab" className="py-12 md:py-16 px-6 max-w-7xl mx-auto">
       <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 md:mb-12 gap-6">
-        <motion.h2
-          initial={{ opacity: 0, y: 20, filter: "blur(10px)", scale: 0.95 }}
-          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)", scale: 1 }}
-          transition={{ duration: 0.8, ease: [0.25, 1, 0.5, 1] }}
-          viewport={{ once: true, margin: "-100px" }}
-          className="text-5xl md:text-7xl font-heading font-bold tracking-tighter"
-        >
-          THE LAB
-        </motion.h2>
+        <TextReveal text="THE LAB" className="text-5xl md:text-7xl font-heading font-bold tracking-tighter" />
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -95,11 +88,20 @@ export const LabSection = React.memo(function LabSection() {
         </motion.p>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+      <motion.div 
+        variants={{
+          hidden: { opacity: 0 },
+          visible: { opacity: 1, transition: { staggerChildren: 0.1 } }
+        }}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-50px" }}
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6"
+      >
         {labItems.map((item, index) => (
           <LabCard key={item.id} item={item} index={index} />
         ))}
-      </div>
+      </motion.div>
     </section>
   );
 });

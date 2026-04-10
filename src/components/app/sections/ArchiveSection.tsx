@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { AnimatePresence, motion, useMotionValue, useSpring } from "motion/react";
 import { ArrowRight } from "lucide-react";
+import { TextReveal } from "@/src/components/ui/text-reveal";
 import type { ArchiveItem } from "../types";
 
 const archiveData: ArchiveItem[] = [
@@ -68,15 +69,7 @@ export const ArchiveSection = React.memo(function ArchiveSection() {
 
   return (
     <section className="py-12 md:py-16 px-6 max-w-7xl mx-auto relative" onMouseMove={handleMouseMove}>
-      <motion.h2
-        initial={{ opacity: 0, x: -100, rotate: -5, transformOrigin: "left bottom" }}
-        whileInView={{ opacity: 1, x: 0, rotate: 0 }}
-        transition={{ duration: 1.2, type: "spring", stiffness: 80, damping: 20 }}
-        viewport={{ once: true, margin: "-100px" }}
-        className="text-5xl md:text-7xl font-heading font-bold mb-8 md:mb-12 tracking-tighter"
-      >
-        THE ARCHIVE
-      </motion.h2>
+      <TextReveal text="THE ARCHIVE" className="text-5xl md:text-7xl font-heading font-bold mb-8 md:mb-12 tracking-tighter" />
 
       <div className="w-full overflow-x-auto pb-8">
         <table className="w-full text-left border-collapse min-w-[800px]">

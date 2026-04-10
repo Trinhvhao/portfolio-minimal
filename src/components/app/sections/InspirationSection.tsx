@@ -1,20 +1,12 @@
 import React from "react";
 import { motion } from "motion/react";
 import { LinkPreview } from "@/src/components/ui/link-preview";
+import { TextReveal } from "@/src/components/ui/text-reveal";
 
 export const InspirationSection = React.memo(function InspirationSection() {
   return (
     <section className="py-12 md:py-16 px-6 max-w-5xl mx-auto">
-      <motion.h2
-        initial={{ opacity: 0, y: -20, rotateX: 60 }}
-        whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
-        transition={{ duration: 1.5, type: "spring", stiffness: 60 }}
-        style={{ perspective: 1200 }}
-        viewport={{ once: true, margin: "-100px" }}
-        className="text-5xl md:text-7xl font-heading font-bold mb-8 md:mb-12 tracking-tighter"
-      >
-        INSPIRATION
-      </motion.h2>
+      <TextReveal text="INSPIRATION" className="text-5xl md:text-7xl font-heading font-bold mb-8 md:mb-12 tracking-tighter" />
 
       <div className="flex flex-col gap-12 text-2xl md:text-4xl text-text-muted max-w-4xl font-sans leading-relaxed">
         <motion.p
