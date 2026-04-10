@@ -73,7 +73,7 @@ const labItems: LabItem[] = [
 
 export const LabSection = React.memo(function LabSection() {
   return (
-    <section className="py-16 md:py-24 px-6 max-w-7xl mx-auto">
+    <section id="lab" className="py-12 md:py-16 px-6 max-w-7xl mx-auto">
       <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 md:mb-12 gap-6">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}

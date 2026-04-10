@@ -4,7 +4,7 @@ import { ArrowRight, Github, Globe, Linkedin } from "lucide-react";
 
 export const ContactSection = React.memo(function ContactSection() {
   return (
-    <section className="pt-24 md:pt-32 pb-12 px-6 max-w-6xl mx-auto relative">
+    <section id="contact" className="pt-16 md:pt-20 pb-10 px-6 max-w-6xl mx-auto relative">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 mb-16 md:mb-24 items-center">
         <motion.div
           initial={{ opacity: 0, x: -30 }}

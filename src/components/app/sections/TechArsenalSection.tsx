@@ -1,81 +1,100 @@
 import React from "react";
 import { motion } from "motion/react";
-import { BentoBox } from "../BentoBox";
 
-export const TechArsenalSection = React.memo(function TechArsenalSection() {
+type TechItem = {
+  name: string;
+  icon: string;
+};
+
+const techStack: TechItem[] = [
+  { name: "React", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" },
+  { name: "Next.js", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nextjs/nextjs-original.svg" },
+  { name: "TypeScript", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg" },
+  { name: "Tailwind", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg" },
+  { name: "Framer Motion", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/framermotion/framermotion-original.svg" },
+  { name: "Three.js", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/threejs/threejs-original.svg" },
+  { name: "Node.js", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg" },
+  { name: "Python", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" },
+  { name: "PostgreSQL", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg" },
+  { name: "Supabase", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/supabase/supabase-original.svg" },
+  { name: "Firebase", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/firebase/firebase-plain.svg" },
+  { name: "Prisma", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/prisma/prisma-original.svg" },
+  { name: "GraphQL", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/graphql/graphql-plain.svg" },
+  { name: "Redis", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/redis/redis-original.svg" },
+  { name: "TensorFlow", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tensorflow/tensorflow-original.svg" },
+  { name: "PyTorch", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/pytorch/pytorch-original.svg" },
+  { name: "Docker", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg" },
+  { name: "Vercel", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vercel/vercel-original.svg" },
+  { name: "Figma", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/figma/figma-original.svg" },
+];
+
+const TechMarquee = React.memo(() => {
   return (
-    <section className="py-16 md:py-24 px-6 max-w-7xl mx-auto">
-      <motion.h2
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
-        className="text-5xl md:text-7xl font-heading font-bold mb-8 md:mb-12 tracking-tighter"
+    <div className="relative w-full overflow-hidden bg-bg-dark py-10 flex flex-col gap-8 md:gap-12">
+      <motion.div
+        className="flex whitespace-nowrap gap-8 md:gap-16 items-center"
+        animate={{ x: ["0%", "-50%"] }}
+        transition={{ duration: 25, ease: "linear", repeat: Infinity }}
       >
-        TECH ARSENAL
-      </motion.h2>
-
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-6 auto-rows-[250px] md:auto-rows-[300px]">
-        <BentoBox className="md:col-span-2 md:row-span-2" title="Core Frontend" description="React, Next.js, TypeScript">
-          <div className="flex-1 flex flex-col justify-center gap-4">
-            <div className="flex flex-wrap gap-4">
-              <span className="text-7xl md:text-9xl font-heading font-bold text-white/5 group-hover:text-white/20 transition-colors duration-500">TS</span>
-              <span className="text-7xl md:text-9xl font-heading font-bold text-white/5 group-hover:text-white/20 transition-colors duration-500 delay-75">RX</span>
-            </div>
-            <div className="flex flex-wrap gap-4">
-              <span className="text-7xl md:text-9xl font-heading font-bold text-white/5 group-hover:text-white/20 transition-colors duration-500 delay-150">NX</span>
-            </div>
-          </div>
-        </BentoBox>
-
-        <BentoBox className="md:col-span-1 md:row-span-1" title="Styling" description="Tailwind CSS, CSS Modules">
-          <div className="flex-1 flex items-center justify-center">
-            <div className="w-24 h-24 rounded-full bg-gradient-to-br from-cyan-400 to-blue-600 opacity-20 group-hover:opacity-60 transition-opacity duration-500 blur-2xl" />
-            <span className="absolute text-4xl font-heading font-bold text-white/30 group-hover:text-white/80 transition-colors duration-500">TW</span>
-          </div>
-        </BentoBox>
-
-        <BentoBox className="md:col-span-1 md:row-span-2" title="Motion & Animation" description="Framer Motion, GSAP">
-          <div className="flex-1 flex items-center justify-center">
-            <motion.div
-              animate={{ rotate: 360, scale: [1, 1.2, 1] }}
-              transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-              className="w-32 h-32 border-4 border-dashed border-text-muted/20 rounded-full group-hover:border-white/40 transition-colors duration-500 flex items-center justify-center"
+        {[...techStack, ...techStack].map((tech, i) => (
+          <div key={`${tech.name}-${i}`} className="flex items-center gap-4 md:gap-6 group shrink-0">
+            <img
+              src={tech.icon}
+              alt={tech.name}
+              className="w-12 h-12 md:w-20 md:h-20 grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300 shrink-0"
+            />
+            <span
+              className="text-5xl md:text-8xl font-heading font-bold text-transparent transition-all duration-300 group-hover:text-white shrink-0"
+              style={{ WebkitTextStroke: "1px rgba(255,255,255,0.2)" }}
             >
-              <motion.div
-                animate={{ rotate: -360 }}
-                transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
-                className="w-16 h-16 border-4 border-text-muted/20 group-hover:border-white/40 transition-colors duration-500"
-              />
-            </motion.div>
+              {tech.name.toUpperCase()}
+            </span>
           </div>
-        </BentoBox>
+        ))}
+      </motion.div>
 
-        <BentoBox className="md:col-span-1 md:row-span-1" title="Creative Dev" description="WebGL, Three.js">
-          <div className="flex-1 flex items-center justify-center">
-            <div className="text-5xl font-mono text-text-muted/30 group-hover:text-white/80 transition-colors duration-500">
-              {"<canvas>"}
-            </div>
+      <motion.div
+        className="flex whitespace-nowrap gap-8 md:gap-16 items-center"
+        animate={{ x: ["-50%", "0%"] }}
+        transition={{ duration: 30, ease: "linear", repeat: Infinity }}
+      >
+        {[...techStack, ...techStack].reverse().map((tech, i) => (
+          <div key={`${tech.name}-reverse-${i}`} className="flex items-center gap-4 md:gap-6 group shrink-0">
+            <img
+              src={tech.icon}
+              alt={tech.name}
+              className="w-12 h-12 md:w-20 md:h-20 grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300 shrink-0"
+            />
+            <span
+              className="text-5xl md:text-8xl font-heading font-bold text-transparent transition-all duration-300 group-hover:text-white shrink-0"
+              style={{ WebkitTextStroke: "1px rgba(255,255,255,0.2)" }}
+            >
+              {tech.name.toUpperCase()}
+            </span>
           </div>
-        </BentoBox>
+        ))}
+      </motion.div>
 
-        <BentoBox className="md:col-span-2 md:row-span-1" title="Backend & Infrastructure" description="Node.js, Postgres, Vercel">
-          <div className="flex-1 flex flex-col justify-center gap-3 font-mono text-xs md:text-sm text-text-muted/50 group-hover:text-text-muted transition-colors duration-500">
-            <p>{">"} npm run build</p>
-            <p>{">"} compiling...</p>
-            <p className="text-white/30 group-hover:text-green-400/80 transition-colors duration-500">
-              {">"} build successful in 2.4s
-            </p>
-          </div>
-        </BentoBox>
+      <div className="absolute top-0 left-0 w-16 md:w-32 h-full bg-gradient-to-r from-bg-dark to-transparent z-10 pointer-events-none" />
+      <div className="absolute top-0 right-0 w-16 md:w-32 h-full bg-gradient-to-l from-bg-dark to-transparent z-10 pointer-events-none" />
+    </div>
+  );
+});
 
-        <BentoBox className="md:col-span-2 md:row-span-1" title="Design & Prototyping" description="Figma, Adobe CC">
-          <div className="flex-1 flex items-center gap-6">
-            <div className="w-16 h-16 rounded-2xl border-2 border-text-muted/20 group-hover:border-white/50 transition-colors duration-500" />
-            <div className="w-16 h-16 rounded-full border-2 border-text-muted/20 group-hover:border-white/50 transition-colors duration-500" />
-            <div className="w-0 h-0 border-l-[32px] border-l-transparent border-b-[55px] border-b-text-muted/20 border-r-[32px] border-r-transparent group-hover:border-b-white/50 transition-colors duration-500" />
-          </div>
-        </BentoBox>
+export const TechArsenalSection = React.memo(() => {
+  return (
+    <section className="py-16 md:py-20 overflow-hidden">
+      <div className="px-6 max-w-7xl mx-auto">
+        <motion.h2
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          className="text-5xl md:text-7xl font-heading font-bold mb-16 md:mb-20 tracking-tighter"
+        >
+          TECH ARSENAL
+        </motion.h2>
       </div>
+      <TechMarquee />
     </section>
   );
 });

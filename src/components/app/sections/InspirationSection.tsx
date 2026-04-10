@@ -4,7 +4,7 @@ import { LinkPreview } from "@/src/components/ui/link-preview";
 
 export const InspirationSection = React.memo(function InspirationSection() {
   return (
-    <section className="py-16 md:py-24 px-6 max-w-5xl mx-auto">
+    <section className="py-12 md:py-16 px-6 max-w-5xl mx-auto">
       <motion.h2
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}

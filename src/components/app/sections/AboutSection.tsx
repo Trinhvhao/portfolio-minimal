@@ -7,7 +7,7 @@ const tickerTech = ["HTML", "CSS", "React.js", "WebGL", "Tailwind_CSS", "Next.js
 
 export const AboutSection = React.memo(function AboutSection() {
   return (
-    <section className="relative py-16 md:py-24 flex flex-col items-center justify-center overflow-hidden">
+    <section id="about" className="relative py-12 md:py-16 flex flex-col items-center justify-center overflow-hidden">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full text-center pointer-events-none select-none">
         <h2 className="text-[30vw] md:text-[25vw] font-heading font-bold text-white/[0.02] leading-none tracking-tighter">
           ABOUT

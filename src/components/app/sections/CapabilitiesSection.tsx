@@ -35,7 +35,7 @@ export const CapabilitiesSection = React.memo(function CapabilitiesSection() {
   const [expanded, setExpanded] = useState<number | null>(0);
 
   return (
-    <section className="py-16 md:py-24 px-6 max-w-7xl mx-auto">
+    <section className="py-12 md:py-16 px-6 max-w-7xl mx-auto">
       <motion.h2
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}

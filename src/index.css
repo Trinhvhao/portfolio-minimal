@@ -24,6 +24,20 @@
   .text-stroke-white {
     -webkit-text-stroke-color: white;
   }
+
+  @keyframes spotlight {
+    0% {
+      opacity: 0;
+      transform: translate(-72%, -62%) scale(0.5);
+    }
+    100% {
+      opacity: 1;
+      transform: translate(-50%,-40%) scale(1);
+    }
+  }
+  .animate-spotlight {
+    animation: spotlight 2s ease .75s 1 forwards;
+  }
 }
 
 body {
@@ -33,6 +47,16 @@ body {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 /* Custom scrollbar for a darker theme */

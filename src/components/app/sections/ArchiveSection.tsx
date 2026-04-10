@@ -67,7 +67,7 @@ export const ArchiveSection = React.memo(function ArchiveSection() {
   };
 
   return (
-    <section className="py-16 md:py-24 px-6 max-w-7xl mx-auto relative" onMouseMove={handleMouseMove}>
+    <section className="py-12 md:py-16 px-6 max-w-7xl mx-auto relative" onMouseMove={handleMouseMove}>
       <motion.h2
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
