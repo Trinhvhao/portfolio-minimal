@@ -76,8 +76,9 @@ export const LabSection = React.memo(function LabSection() {
     <section id="lab" className="py-12 md:py-16 px-6 max-w-7xl mx-auto">
       <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 md:mb-12 gap-6">
         <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, y: 20, filter: "blur(10px)", scale: 0.95 }}
+          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)", scale: 1 }}
+          transition={{ duration: 0.8, ease: [0.25, 1, 0.5, 1] }}
           viewport={{ once: true, margin: "-100px" }}
           className="text-5xl md:text-7xl font-heading font-bold tracking-tighter"
         >

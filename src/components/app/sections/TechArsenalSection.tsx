@@ -86,9 +86,11 @@ export const TechArsenalSection = React.memo(() => {
     <section className="py-16 md:py-20 overflow-hidden">
       <div className="px-6 max-w-7xl mx-auto">
         <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, scale: 1.1, rotateY: 15 }}
+          whileInView={{ opacity: 1, scale: 1, rotateY: 0 }}
           viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 1.2, ease: [0.33, 1, 0.68, 1] }}
+          style={{ perspective: 1000 }}
           className="text-5xl md:text-7xl font-heading font-bold mb-16 md:mb-20 tracking-tighter"
         >
           TECH ARSENAL

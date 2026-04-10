@@ -69,8 +69,9 @@ export const ArchiveSection = React.memo(function ArchiveSection() {
   return (
     <section className="py-12 md:py-16 px-6 max-w-7xl mx-auto relative" onMouseMove={handleMouseMove}>
       <motion.h2
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
+        initial={{ opacity: 0, x: -100, rotate: -5, transformOrigin: "left bottom" }}
+        whileInView={{ opacity: 1, x: 0, rotate: 0 }}
+        transition={{ duration: 1.2, type: "spring", stiffness: 80, damping: 20 }}
         viewport={{ once: true, margin: "-100px" }}
         className="text-5xl md:text-7xl font-heading font-bold mb-8 md:mb-12 tracking-tighter"
       >

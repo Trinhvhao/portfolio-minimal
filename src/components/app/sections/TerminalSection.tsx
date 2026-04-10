@@ -63,8 +63,9 @@ export const TerminalSection = React.memo(function TerminalSection() {
     <section id="terminal" className="py-16 md:py-20 px-6 max-w-5xl mx-auto">
       <div className="mb-12">
         <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, filter: "brightness(2) contrast(1.5) blur(10px)" }}
+          whileInView={{ opacity: 1, filter: "brightness(1) contrast(1) blur(0px)" }}
+          transition={{ duration: 1, ease: "linear" }}
           viewport={{ once: true, margin: "-100px" }}
           className="text-4xl md:text-5xl font-heading font-bold tracking-tighter mb-4"
         >

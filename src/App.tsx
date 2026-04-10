@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
+import Lenis from "lenis";
 import { projects } from "@/src/components/app/data";
 import { AboutSection } from "@/src/components/app/sections/AboutSection";
 import { ArchiveSection } from "@/src/components/app/sections/ArchiveSection";
@@ -12,6 +13,7 @@ import { FloatingDock } from "@/src/components/app/FloatingDock";
 import { HeroSection } from "@/src/components/app/sections/HeroSection";
 import { InspirationSection } from "@/src/components/app/sections/InspirationSection";
 import { LabSection } from "@/src/components/app/sections/LabSection";
+import { OpenSourceSection } from "@/src/components/app/sections/OpenSourceSection";
 import { ProcessSection } from "@/src/components/app/sections/ProcessSection";
 import { ProjectsSection } from "@/src/components/app/sections/ProjectsSection";
 import { SkillsSection } from "@/src/components/app/sections/SkillsSection";
@@ -50,8 +52,29 @@ export default function App() {
     return () => clearTimeout(timer);
   }, []);
 
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.2,
+      smoothWheel: true,
+      touchMultiplier: 1.2,
+    });
+
+    let rafId = 0;
+    const raf = (time: number) => {
+      lenis.raf(time);
+      rafId = requestAnimationFrame(raf);
+    };
+
+    rafId = requestAnimationFrame(raf);
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      lenis.destroy();
+    };
+  }, []);
+
   return (
-    <div className="min-h-screen bg-bg-dark text-text-light selection:bg-white selection:text-black">
+    <div className="relative min-h-screen bg-bg-dark text-text-light selection:bg-white selection:text-black">
       <AnimatePresence>
         {isLoading && (
           <motion.div
@@ -78,7 +101,7 @@ export default function App() {
       </AnimatePresence>
 
       <div className="hidden">
-        {projects.map((project) => (
+        {projects.slice(0, 2).map((project) => (
           <img key={`preload-${project.title}`} src={project.image} alt="" loading="lazy" decoding="async" />
         ))}
       </div>
@@ -90,6 +113,7 @@ export default function App() {
       <ExperienceSection />
       <TechArsenalSection />
       <ProjectsSection />
+      <OpenSourceSection />
       <ArchiveSection />
       <LabSection />
       <SkillsSection />

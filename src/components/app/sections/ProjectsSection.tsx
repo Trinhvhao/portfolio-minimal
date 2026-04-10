@@ -48,10 +48,10 @@ const projects: Project[] = [
 const ProjectCard = React.memo(({ project, index }: { project: Project; index: number }) => {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.4, delay: index * 0.1 }}
+      initial={{ opacity: 0, y: 60, filter: "blur(10px)" }}
+      whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.9, delay: index * 0.1, ease: [0.25, 1, 0.5, 1] }}
       className={`relative h-[400px] md:h-[500px] border border-text-muted/20 bg-bg-dark group overflow-hidden ${project.colSpan}`}
     >
       <div className="absolute inset-0 bg-black z-0 overflow-hidden">
@@ -105,11 +105,12 @@ const ProjectCard = React.memo(({ project, index }: { project: Project; index: n
 
 export const ProjectsSection = React.memo(function ProjectsSection() {
   return (
-    <section id="projects" className="py-12 md:py-16 px-6 max-w-7xl mx-auto">
+    <section id="projects" className="py-12 md:py-16 px-6 max-w-7xl mx-auto overflow-hidden">
       <motion.h2
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
+        initial={{ opacity: 0, y: 60, filter: "blur(12px)" }}
+        whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
         viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 1, ease: [0.25, 1, 0.5, 1] }}
         className="text-5xl md:text-7xl font-heading font-bold mb-12 md:mb-16 tracking-tighter"
       >
         SELECTED WORKS

@@ -33,7 +33,10 @@ export const AiFutureSection = React.memo(function AiFutureSection() {
             </div>
 
             <div className="flex-1 relative min-h-[300px] lg:min-h-full">
-              <SplineScene scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode" className="w-full h-full" />
+              <SplineScene
+                scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
+                className="w-full h-full"
+              />
             </div>
           </div>
         </Card>

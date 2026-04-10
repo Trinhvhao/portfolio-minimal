@@ -85,9 +85,10 @@ export const ProcessSection = React.memo(function ProcessSection() {
   return (
     <section className="py-12 md:py-16 px-6 max-w-7xl mx-auto relative">
       <motion.h2
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
+        initial={{ opacity: 0, x: -50, scale: 0.95 }}
+        whileInView={{ opacity: 1, x: 0, scale: 1 }}
         viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.8, type: "spring", stiffness: 100, damping: 20 }}
         className="text-5xl md:text-7xl font-heading font-bold mb-8 md:mb-12 tracking-tighter"
       >
         PROCESS

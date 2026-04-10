@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { motion } from "motion/react";
+import { motion, useInView } from "motion/react";
 import { Play, Pause, Volume2, VolumeX, FastForward, Rewind } from "lucide-react";
 
 const TRACK = {
@@ -16,34 +16,31 @@ export function VibeStation() {
   const [progress, setProgress] = useState(0);
   const [bars, setBars] = useState<number[]>(Array(NUM_BARS).fill(10));
 
+  const containerRef = useRef<HTMLDivElement>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
-  const animationRef = useRef<number | null>(null);
+  const isInView = useInView(containerRef, { margin: "-100px" });
 
   useEffect(() => {
-    if (isPlaying) {
-      const updateBars = () => {
-        setBars((prev) =>
-          prev.map((_, i) => {
-            const distanceToCenter = Math.abs(i - NUM_BARS / 2);
-            const maxH = 100 - distanceToCenter * 2;
-            const minH = 10;
-            return Math.max(minH, Math.random() * maxH);
-          }),
-        );
-        animationRef.current = requestAnimationFrame(() => {
-          setTimeout(updateBars, 50);
-        });
-      };
-      updateBars();
-    } else {
+    if (!isPlaying || !isInView) {
       setBars(Array(NUM_BARS).fill(10));
-      if (animationRef.current !== null) cancelAnimationFrame(animationRef.current);
+      return;
     }
 
+    const intervalId = window.setInterval(() => {
+      setBars(
+        Array.from({ length: NUM_BARS }, (_, i) => {
+          const distanceToCenter = Math.abs(i - NUM_BARS / 2);
+          const maxH = 100 - distanceToCenter * 2;
+          const minH = 10;
+          return Math.max(minH, Math.random() * maxH);
+        }),
+      );
+    }, 100);
+
     return () => {
-      if (animationRef.current !== null) cancelAnimationFrame(animationRef.current);
+      clearInterval(intervalId);
     };
-  }, [isPlaying]);
+  }, [isPlaying, isInView]);
 
   const togglePlay = () => {
     if (!audioRef.current) return;
@@ -81,7 +78,7 @@ export function VibeStation() {
   };
 
   return (
-    <div className="w-full max-w-5xl mx-auto">
+    <div ref={containerRef} className="w-full max-w-5xl mx-auto">
       <div className="relative bg-black/40 backdrop-blur-xl border border-white/10 rounded-3xl p-6 md:p-10 overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.5)]">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gradient-to-br from-purple-500/10 via-transparent to-blue-500/10 pointer-events-none blur-3xl" />
 

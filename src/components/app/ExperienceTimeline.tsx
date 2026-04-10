@@ -1,5 +1,6 @@
 import React from "react";
-import { motion } from "motion/react";
+import { motion, useScroll, useTransform } from "motion/react";
+import { useRef } from "react";
 import { Briefcase, Calendar } from "lucide-react";
 
 type Experience = {
@@ -46,10 +47,20 @@ const EXPERIENCES: Experience[] = [
 ];
 
 export function ExperienceTimeline() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start center", "end center"]
+  });
+  const lineHeight = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
   return (
     <div className="w-full max-w-4xl mx-auto">
-      <div className="relative">
-        <div className="absolute left-[15px] md:left-[39px] top-2 bottom-2 w-[2px] bg-gradient-to-b from-white/20 via-white/10 to-transparent" />
+      <div ref={containerRef} className="relative">
+        <div className="absolute left-[15px] md:left-[39px] top-2 bottom-2 w-[2px] bg-white/5" />
+        <motion.div 
+          style={{ height: lineHeight }} 
+          className="absolute left-[15px] md:left-[39px] top-2 w-[2px] bg-gradient-to-b from-[#00F2FE] via-[#A855F7] to-transparent origin-top z-0"
+        />
 
         <div className="flex flex-col gap-12">
           {EXPERIENCES.map((exp, index) => (

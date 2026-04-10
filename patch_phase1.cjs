@@ -1,53 +1,12 @@
-import React, { useState } from "react";
-import { AnimatePresence, motion } from "motion/react";
-import { Plus } from "lucide-react";
-import { cn } from "@/src/lib/utils";
-import type { Capability } from "../types";
+const fs = require('fs');
+const path = require('path');
 
-const capabilitiesData: Capability[] = [
-  {
-    title: "CREATIVE DEVELOPMENT",
-    description:
-      "Bridging the gap between design and engineering. I build highly interactive, motion-rich web experiences that captivate users while maintaining robust architecture.",
-    tags: ["< WebGL />", "< GSAP />", "< Framer Motion />"],
-  },
-  {
-    title: "UI/UX DESIGN",
-    description:
-      "Crafting intuitive and visually striking interfaces. My design philosophy is rooted in brutalism, minimalism, and typography-driven layouts.",
-    tags: ["< Figma />", "< Prototyping />", "< Wireframing />"],
-  },
-  {
-    title: "PERFORMANCE OPTIMIZATION",
-    description:
-      "Ensuring lightning-fast load times and silky-smooth 60fps animations. I optimize rendering cycles, asset delivery, and bundle sizes.",
-    tags: ["< React Profiler />", "< Lighthouse />", "< Lazy Loading />"],
-  },
-  {
-    title: "WEB3 INTEGRATION",
-    description:
-      "Connecting modern frontends to decentralized networks. Building seamless dApp interfaces with Web3.js and Ethers.js.",
-    tags: ["< Ethers.js />", "< Smart Contracts />", "< dApps />"],
-  },
-];
+const capabilitiesPath = path.join(__dirname, 'src/components/app/sections/CapabilitiesSection.tsx');
+let capabilitiesContent = fs.readFileSync(capabilitiesPath, 'utf8');
 
-export const CapabilitiesSection = React.memo(function CapabilitiesSection() {
-  const [expanded, setExpanded] = useState<number | null>(0);
-
-  return (
-    <section className="py-12 md:py-16 px-6 max-w-7xl mx-auto">
-      <motion.h2
-        initial={{ opacity: 0, y: 50, rotateX: -20 }}
-        whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 1, ease: [0.25, 1, 0.5, 1] }}
-        style={{ perspective: 1000 }}
-        className="text-5xl md:text-7xl font-heading font-bold mb-8 md:mb-12 tracking-tighter"
-      >
-        CAPABILITIES
-      </motion.h2>
-
-      <motion.div 
+capabilitiesContent = capabilitiesContent.replace(
+  /<div className="flex flex-col border-b border-text-muted\/20">([\s\S]*?)<\/div>\n    <\/section>/,
+  `<motion.div 
         variants={{
           hidden: { opacity: 0 },
           visible: {
@@ -139,6 +98,38 @@ export const CapabilitiesSection = React.memo(function CapabilitiesSection() {
           );
         })}
       </motion.div>
-    </section>
-  );
-});
+    </section>`
+);
+
+fs.writeFileSync(capabilitiesPath, capabilitiesContent);
+console.log("Updated Capabilities");
+
+const timelinePath = path.join(__dirname, 'src/components/app/ExperienceTimeline.tsx');
+let timelineContent = fs.readFileSync(timelinePath, 'utf8');
+
+if (!timelineContent.includes('useScroll')) {
+  timelineContent = timelineContent.replace('import { motion } from "motion/react";', 'import { motion, useScroll, useTransform } from "motion/react";\nimport { useRef } from "react";');
+}
+
+timelineContent = timelineContent.replace('export function ExperienceTimeline() {', `export function ExperienceTimeline() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start center", "end center"]
+  });
+  const lineHeight = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);`);
+
+timelineContent = timelineContent.replace('<div className="relative">', '<div ref={containerRef} className="relative">');
+
+timelineContent = timelineContent.replace(
+  '<div className="absolute left-[15px] md:left-[39px] top-2 bottom-2 w-[2px] bg-gradient-to-b from-white/20 via-white/10 to-transparent" />',
+  `<div className="absolute left-[15px] md:left-[39px] top-2 bottom-2 w-[2px] bg-white/5" />
+        <motion.div 
+          style={{ height: lineHeight }} 
+          className="absolute left-[15px] md:left-[39px] top-2 w-[2px] bg-gradient-to-b from-[#00F2FE] via-[#A855F7] to-transparent origin-top z-0"
+        />`
+);
+
+fs.writeFileSync(timelinePath, timelineContent);
+console.log("Updated Timeline");
+

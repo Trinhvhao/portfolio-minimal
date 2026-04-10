@@ -4,61 +4,75 @@ type TickerItemProps = {
   text: string;
 };
 
+type TickerUpdate = () => void;
+
+const tickerSubscribers = new Set<TickerUpdate>();
+let tickerRafId: number | null = null;
+
+const runTickerLoop = () => {
+  tickerSubscribers.forEach((update) => update());
+  tickerRafId = requestAnimationFrame(runTickerLoop);
+};
+
+const ensureTickerLoop = () => {
+  if (tickerRafId === null) {
+    tickerRafId = requestAnimationFrame(runTickerLoop);
+  }
+};
+
+const stopTickerLoopIfIdle = () => {
+  if (tickerSubscribers.size === 0 && tickerRafId !== null) {
+    cancelAnimationFrame(tickerRafId);
+    tickerRafId = null;
+  }
+};
+
 export const TickerItem = React.memo(function TickerItem({ text }: TickerItemProps) {
   const ref = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
-    let animationFrameId = 0;
-    let winWidth = window.innerWidth;
-    let winHeight = window.innerHeight;
+    const updateGlow = () => {
+      if (!ref.current) return;
 
-    const handleResize = () => {
-      winWidth = window.innerWidth;
-      winHeight = window.innerHeight;
+      const rect = ref.current.getBoundingClientRect();
+      const winWidth = window.innerWidth;
+      const winHeight = window.innerHeight;
+
+      const itemCenterX = rect.left + rect.width / 2;
+      const windowCenterX = winWidth / 2;
+      const distanceX = Math.abs(windowCenterX - itemCenterX);
+      const maxDistanceX = winWidth / 3;
+
+      let glowX = 1 - distanceX / maxDistanceX;
+      glowX = Math.min(1, Math.max(0, glowX));
+
+      const itemCenterY = rect.top + rect.height / 2;
+      const windowCenterY = winHeight / 2;
+      const distanceY = Math.abs(windowCenterY - itemCenterY);
+      const maxDistanceY = winHeight / 2.5;
+
+      let glowY = 1 - distanceY / maxDistanceY;
+      glowY = Math.min(1, Math.max(0, glowY));
+
+      const glow = glowX * glowY;
+      const easedGlow = glow * glow * (3 - 2 * glow);
+
+      const opacity = 0.2 + easedGlow * 0.8;
+      const blur = easedGlow * 15;
+      const shadowOpacity = easedGlow * 0.8;
+
+      ref.current.style.color = `rgba(255, 255, 255, ${opacity})`;
+      ref.current.style.textShadow =
+        easedGlow > 0.01 ? `0 0 ${blur}px rgba(255,255,255,${shadowOpacity})` : "none";
     };
 
-    window.addEventListener("resize", handleResize, { passive: true });
-
-    const checkPosition = () => {
-      if (ref.current) {
-        const rect = ref.current.getBoundingClientRect();
-
-        const itemCenterX = rect.left + rect.width / 2;
-        const windowCenterX = winWidth / 2;
-        const distanceX = Math.abs(windowCenterX - itemCenterX);
-        const maxDistanceX = winWidth / 3;
-
-        let glowX = 1 - distanceX / maxDistanceX;
-        glowX = Math.min(1, Math.max(0, glowX));
-
-        const itemCenterY = rect.top + rect.height / 2;
-        const windowCenterY = winHeight / 2;
-        const distanceY = Math.abs(windowCenterY - itemCenterY);
-        const maxDistanceY = winHeight / 2.5;
-
-        let glowY = 1 - distanceY / maxDistanceY;
-        glowY = Math.min(1, Math.max(0, glowY));
-
-        const glow = glowX * glowY;
-        const easedGlow = glow * glow * (3 - 2 * glow);
-
-        const opacity = 0.2 + easedGlow * 0.8;
-        const blur = easedGlow * 15;
-        const shadowOpacity = easedGlow * 0.8;
-
-        ref.current.style.color = `rgba(255, 255, 255, ${opacity})`;
-        ref.current.style.textShadow =
-          easedGlow > 0.01 ? `0 0 ${blur}px rgba(255,255,255,${shadowOpacity})` : "none";
-      }
-
-      animationFrameId = requestAnimationFrame(checkPosition);
-    };
-
-    checkPosition();
+    tickerSubscribers.add(updateGlow);
+    ensureTickerLoop();
+    updateGlow();
 
     return () => {
-      cancelAnimationFrame(animationFrameId);
-      window.removeEventListener("resize", handleResize);
+      tickerSubscribers.delete(updateGlow);
+      stopTickerLoopIfIdle();
     };
   }, []);
 
