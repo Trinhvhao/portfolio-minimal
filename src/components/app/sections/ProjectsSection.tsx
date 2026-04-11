@@ -115,6 +115,15 @@ export const ProjectsSection = React.memo(function ProjectsSection() {
       >
         SELECTED WORKS
       </motion.h2>
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ delay: 0.2, duration: 0.6, ease: [0.76, 0, 0.24, 1] }}
+          className="text-text-muted font-mono text-sm md:text-base max-w-2xl mb-12 md:mb-16 "
+        >
+          A selection of recent development projects and creative case studies.
+        </motion.p>
 
       <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
         {projects.map((project, index) => (

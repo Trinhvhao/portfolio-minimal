@@ -68,7 +68,16 @@ export const TestimonialsSection = React.memo(function TestimonialsSection() {
   return (
     <section className="bg-transparent my-20 relative px-6 md:px-12 w-full max-w-7xl mx-auto border-t border-text-muted/10 pt-20">
       <div className="z-10 mx-auto w-full">
-        <TextReveal text="CLIENT FEEDBACK" className="text-5xl md:text-7xl font-heading font-bold mb-8 md:mb-12 tracking-tighter" />
+        <TextReveal text="CLIENT FEEDBACK" className="text-5xl md:text-7xl font-heading font-bold mb-4 md:mb-6 tracking-tighter" />
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ delay: 0.2, duration: 0.6, ease: [0.76, 0, 0.24, 1] }}
+          className="text-text-muted font-mono text-sm md:text-base max-w-2xl mb-12 md:mb-16 "
+        >
+          See what partners and clients have to say about collaborating.
+        </motion.p>
 
         <div className="flex justify-center gap-6 mt-16 [mask-image:linear-gradient(to_bottom,transparent,black_25%,black_75%,transparent)] max-h-[740px] overflow-hidden">
           <TestimonialsColumn testimonials={firstColumn} duration={15} />

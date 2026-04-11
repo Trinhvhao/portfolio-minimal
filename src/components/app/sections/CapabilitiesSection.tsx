@@ -46,6 +46,15 @@ export const CapabilitiesSection = React.memo(function CapabilitiesSection() {
       >
         CAPABILITIES
       </motion.h2>
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ delay: 0.2, duration: 0.6, ease: [0.76, 0, 0.24, 1] }}
+          className="text-text-muted font-mono text-sm md:text-base max-w-2xl mb-12 md:mb-16 "
+        >
+          Core competencies and specialized skills across design and engineering.
+        </motion.p>
 
       <motion.div 
         variants={{
