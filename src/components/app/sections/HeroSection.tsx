@@ -83,11 +83,7 @@ export const HeroSection = React.memo(function HeroSection() {
             src={trinhhaoImage}
             alt="Trinh Van Hao"
             fetchPriority="high"
-            className="w-full h-full object-cover rounded-t-full grayscale contrast-125 brightness-75 transition-all duration-700 hover:grayscale-0 hover:contrast-100 hover:brightness-100 cursor-pointer"
-            style={{
-              maskImage: "linear-gradient(to bottom, black 60%, transparent 100%)",
-              WebkitMaskImage: "linear-gradient(to bottom, black 60%, transparent 100%)",
-            }}
+            className="w-full h-full object-cover rounded-t-full"
           />
         </motion.div>
 
