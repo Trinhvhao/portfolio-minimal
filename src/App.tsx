@@ -18,6 +18,7 @@ import { OpenSourceSection } from "@/src/components/app/sections/OpenSourceSecti
 import { ProcessSection } from "@/src/components/app/sections/ProcessSection";
 import { ProjectsSection } from "@/src/components/app/sections/ProjectsSection";
 import { SkillsSection } from "@/src/components/app/sections/SkillsSection";
+import { TestimonialsSection } from "@/src/components/app/sections/TestimonialsSection";
 import { TechArsenalSection } from "@/src/components/app/sections/TechArsenalSection";
 import { TerminalSection } from "@/src/components/app/sections/TerminalSection";
 import { VibeStationSection } from "@/src/components/app/sections/VibeStationSection";
@@ -115,6 +116,7 @@ export default function App() {
       <ExperienceSection />
       <TechArsenalSection />
       <ProjectsSection />
+      <TestimonialsSection />
       <OpenSourceSection />
       <ArchiveSection />
       <LabSection />

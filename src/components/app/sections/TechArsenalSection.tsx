@@ -34,7 +34,7 @@ const TechMarquee = React.memo(() => {
       <motion.div
         className="flex whitespace-nowrap gap-8 md:gap-16 items-center"
         animate={{ x: ["0%", "-50%"] }}
-        transition={{ duration: 25, ease: "linear", repeat: Infinity }}
+        transition={{ duration: 15, ease: "linear", repeat: Infinity }}
       >
         {[...techStack, ...techStack].map((tech, i) => (
           <div key={`${tech.name}-${i}`} className="flex items-center gap-4 md:gap-6 group shrink-0">
