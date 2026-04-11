@@ -21,7 +21,7 @@ import { SkillsSection } from "@/src/components/app/sections/SkillsSection";
 import { TestimonialsSection } from "@/src/components/app/sections/TestimonialsSection";
 import { TechArsenalSection } from "@/src/components/app/sections/TechArsenalSection";
 import { TerminalSection } from "@/src/components/app/sections/TerminalSection";
-import { VibeStationSection } from "@/src/components/app/sections/VibeStationSection";
+import { FloatingVibeStation } from "@/src/components/app/FloatingVibeStation";
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -124,9 +124,11 @@ export default function App() {
       <TerminalSection />
       <AiFutureSection />
       <DigitalPresenceSection />
-      <VibeStationSection />
+      
       <InspirationSection />
       <ContactSection />
+      <FloatingVibeStation />
+      <FloatingVibeStation />
       <FloatingDock />
     </div>
   );
