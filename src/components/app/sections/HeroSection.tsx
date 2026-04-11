@@ -37,7 +37,7 @@ export const HeroSection = React.memo(function HeroSection() {
     <section id="home" className="relative h-screen flex flex-col items-center justify-center overflow-hidden" onMouseMove={handleMouseMove}>
       <header className="absolute top-0 left-0 w-full p-6 md:p-10 flex justify-between items-center z-50">
         <div className="text-2xl font-heading font-bold tracking-tighter">TVH</div>
-        <div className="text-xs font-mono tracking-widest text-text-muted absolute left-1/2 -translate-x-1/2 hidden md:block">
+        <div className="text-xs font-mono tracking-widest text-text-muted absolute top-28 md:top-32 left-1/2 -translate-x-1/2 hidden md:block">
           HELLO, I'M TRINH VAN HAO
         </div>
         <button className="px-6 py-2 rounded-full border border-text-muted/30 hover:bg-white hover:text-black transition-colors text-xs font-mono tracking-widest">
