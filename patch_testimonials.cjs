@@ -1,9 +1,12 @@
-import React from "react";
-import { motion } from "motion/react";
-import { TestimonialsColumn } from "@/src/components/ui/testimonials-columns-1";
-import { TextReveal } from "@/src/components/ui/text-reveal";
+const fs = require('fs');
+const path = require('path');
 
-const testimonials = [
+const testPath = path.join(__dirname, 'src', 'components', 'app', 'sections', 'TestimonialsSection.tsx');
+let testContent = fs.readFileSync(testPath, 'utf8');
+
+testContent = testContent.replace(
+  /const testimonials = \[[^]*?\];/s,
+  `const testimonials = [
   {
     text: "Hao's implementation of the AI-powered search pipeline drastically reduced our query times. A brilliant full stack developer.",
     image: "https://randomuser.me/api/portraits/women/1.jpg",
@@ -58,33 +61,9 @@ const testimonials = [
     name: "Sophie Clark",
     role: "Founder",
   },
-];
+];`
+);
 
-const firstColumn = testimonials.slice(0, 3);
-const secondColumn = testimonials.slice(3, 6);
-const thirdColumn = testimonials.slice(6, 9);
+fs.writeFileSync(testPath, testContent, 'utf8');
 
-export const TestimonialsSection = React.memo(function TestimonialsSection() {
-  return (
-    <section className="bg-transparent my-20 relative px-6 md:px-12 w-full max-w-7xl mx-auto border-t border-text-muted/10 pt-20">
-      <div className="z-10 mx-auto w-full">
-        <TextReveal text="CLIENT FEEDBACK" className="text-5xl md:text-7xl font-heading font-bold mb-2 md:mb-3 tracking-tighter" />
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ delay: 0.2, duration: 0.6, ease: [0.76, 0, 0.24, 1] }}
-          className="text-text-muted font-mono text-sm md:text-base max-w-none mb-10 md:mb-14 text-left w-full"
-        >
-          See what partners and clients have to say about collaborating.
-        </motion.p>
-
-        <div className="flex justify-center gap-6 mt-16 [mask-image:linear-gradient(to_bottom,transparent,black_25%,black_75%,transparent)] max-h-[740px] overflow-hidden">
-          <TestimonialsColumn testimonials={firstColumn} duration={15} />
-          <TestimonialsColumn testimonials={secondColumn} className="hidden md:block" duration={19} />
-          <TestimonialsColumn testimonials={thirdColumn} className="hidden lg:block" duration={17} />
-        </div>
-      </div>
-    </section>
-  );
-});
+console.log('Testimonials updated.');

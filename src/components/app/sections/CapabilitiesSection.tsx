@@ -6,28 +6,28 @@ import type { Capability } from "../types";
 
 const capabilitiesData: Capability[] = [
   {
-    title: "CREATIVE DEVELOPMENT",
+    title: "FULL STACK DEVELOPMENT",
     description:
-      "Bridging the gap between design and engineering. I build highly interactive, motion-rich web experiences that captivate users while maintaining robust architecture.",
-    tags: ["< WebGL />", "< GSAP />", "< Framer Motion />"],
+      "Building seamless web applications from scalable backends to interactive frontends. Specializing in standard MERN/PERN stacks and modern meta-frameworks.",
+    tags: ["< Next.js />", "< Node.js />", "< PostgreSQL />"],
   },
   {
-    title: "UI/UX DESIGN",
+    title: "AI & ML INTEGRATION",
     description:
-      "Crafting intuitive and visually striking interfaces. My design philosophy is rooted in brutalism, minimalism, and typography-driven layouts.",
-    tags: ["< Figma />", "< Prototyping />", "< Wireframing />"],
+      "Empowering software with modern AI. Building Retrieval-Augmented Generation (RAG) pipelines, automating workflows, and integrating LLM APIs.",
+    tags: ["< LangChain />", "< OpenAI />", "< FastAPI />"],
   },
   {
-    title: "PERFORMANCE OPTIMIZATION",
+    title: "COMPUTER VISION & OCR",
     description:
-      "Ensuring lightning-fast load times and silky-smooth 60fps animations. I optimize rendering cycles, asset delivery, and bundle sizes.",
-    tags: ["< React Profiler />", "< Lighthouse />", "< Lazy Loading />"],
+      "Deploying deep learning models for advanced object detection, plate recognition, and text extraction using state-of-the-art vision architectures.",
+    tags: ["< PyTorch />", "< YOLO />", "< OpenCV />"],
   },
   {
-    title: "WEB3 INTEGRATION",
+    title: "SYSTEM ARCHITECTURE",
     description:
-      "Connecting modern frontends to decentralized networks. Building seamless dApp interfaces with Web3.js and Ethers.js.",
-    tags: ["< Ethers.js />", "< Smart Contracts />", "< dApps />"],
+      "Designing robust, secure, and easily deployable services. Managing containerized applications, scalable cloud databases, and continuous integration.",
+    tags: ["< Docker />", "< AWS />", "< CI/CD />"],
   },
 ];
 

@@ -12,36 +12,36 @@ type Project = {
 
 const projects: Project[] = [
   {
-    title: "E-Commerce Reimagined",
-    tags: ["< Next.js />", "< Stripe />"],
-    image: "https://images.unsplash.com/photo-1600132806370-bf17e65e942f?auto=format&fit=crop&w=1200&q=80",
+    title: "AI-Powered Enterprise RAG",
+    tags: ["< React />", "< LangChain />", "< FastAPI />"],
+    image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=1200&q=80",
     colSpan: "md:col-span-8",
     description:
-      "A high-performance headless e-commerce solution built for scale. Features real-time inventory syncing and seamless checkout.",
+      "An intelligent chatbot platform designed for enterprise data. Allows secure document search and summarization with high accuracy via vector embeddings.",
   },
   {
-    title: "Fintech Dashboard",
-    tags: ["< React />", "< D3.js />"],
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80",
+    title: "Smart Talent Bridge",
+    tags: ["< Next.js />", "< Python />"],
+    image: "https://images.unsplash.com/photo-1579389083046-e3df9c2b3325?auto=format&fit=crop&w=800&q=80",
     colSpan: "md:col-span-4",
     description:
-      "Data-dense financial analytics dashboard. Complex data visualization with D3.js and real-time WebSocket feeds.",
+      "A deep-learning enabled recruitment tool. Automatically parses CVs (OCR) and maps candidate skills to job requirements using NLP.",
   },
   {
-    title: "Web3 NFT Platform",
-    tags: ["< WebGL />", "< Three.js />"],
-    image: "https://images.unsplash.com/photo-1634152962476-4b8a00e1915c?auto=format&fit=crop&w=800&q=80",
+    title: "Object Detection System",
+    tags: ["< PyTorch />", "< YOLOv11 />"],
+    image: "https://images.unsplash.com/photo-1620288863675-5f992f9d85b5?auto=format&fit=crop&w=800&q=80",
     colSpan: "md:col-span-4",
     description:
-      "Immersive 3D gallery for digital assets. Custom shaders and WebGL rendering for a premium browsing experience.",
+      "High-speed computer vision pipeline integrating a custom YOLO training loop for real-time license plate detection and tracking.",
   },
   {
-    title: "Creative Agency",
-    tags: ["< GSAP />", "< Tailwind />"],
-    image: "https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&w=1200&q=80",
+    title: "Real-time E-Commerce Analytics",
+    tags: ["< Node.js />", "< PostgreSQL />"],
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80",
     colSpan: "md:col-span-8",
     description:
-      "Award-winning portfolio site with scroll-jacking, custom cursors, and complex GSAP timeline animations.",
+      "A scalable full-stack dashboard for merchants. Processes thousands of live transactions, predicting inventory needs and tracking user behaviors.",
   },
 ];
 
@@ -122,7 +122,7 @@ export const ProjectsSection = React.memo(function ProjectsSection() {
           transition={{ delay: 0.2, duration: 0.6, ease: [0.76, 0, 0.24, 1] }}
           className="text-text-muted font-mono text-sm md:text-base max-w-none mb-10 md:mb-14 text-left w-full"
         >
-          A selection of recent development projects and creative case studies.
+          A selection of recent scalable web applications and AI integrated systems.
         </motion.p>
 
       <div className="grid grid-cols-1 md:grid-cols-12 gap-6">

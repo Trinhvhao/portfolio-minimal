@@ -29,7 +29,7 @@ export const TerminalSection = React.memo(function TerminalSection() {
         output = "Available commands: whoami, skills, contact, clear, sudo";
         break;
       case "whoami":
-        output = "Trinh Van Hao - Creative Engineer & Full Stack Developer.\nBuilding digital experiences with code and design.";
+        output = "Trinh Van Hao - AI Applications Builder & Full Stack Developer.\nBuilding digital experiences with code and design.";
         break;
       case "skills":
         output = "Frontend: React, Next.js, WebGL, Tailwind, Framer Motion\nBackend: Node.js, Python, PostgreSQL, Firebase\nTools: Git, Docker, Figma";
