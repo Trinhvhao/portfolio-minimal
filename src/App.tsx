@@ -10,7 +10,6 @@ import { ContactSection } from "@/src/components/app/sections/ContactSection";
 import { DigitalPresenceSection } from "@/src/components/app/sections/DigitalPresenceSection";
 import { ExperienceSection } from "@/src/components/app/sections/ExperienceSection";
 import { FloatingDock } from "@/src/components/app/FloatingDock";
-import { CustomCursor } from "@/src/components/ui/custom-cursor";
 import { FilmGrain } from "@/src/components/ui/film-grain";
 import { HeroSection } from "@/src/components/app/sections/HeroSection";
 import { InspirationSection } from "@/src/components/app/sections/InspirationSection";
@@ -78,7 +77,6 @@ export default function App() {
   return (
     <div className="relative min-h-screen bg-bg-dark text-text-light selection:bg-white selection:text-black">
       <FilmGrain />
-      <CustomCursor />
       <AnimatePresence>
         {isLoading && (
           <motion.div
