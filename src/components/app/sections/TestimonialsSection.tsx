@@ -68,25 +68,7 @@ export const TestimonialsSection = React.memo(function TestimonialsSection() {
   return (
     <section className="bg-transparent my-20 relative px-6 md:px-12 w-full max-w-7xl mx-auto border-t border-text-muted/10 pt-20">
       <div className="z-10 mx-auto w-full">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.1, ease: [0.76, 0, 0.24, 1] }}
-          viewport={{ once: true, margin: "-100px" }}
-          className="flex flex-col items-center justify-center max-w-[700px] mx-auto"
-        >
-          <div className="flex justify-center mb-4">
-            <span className="border border-white/20 py-1 px-4 rounded-full text-xs font-mono uppercase tracking-widest text-text-muted">
-              Testimonials
-            </span>
-          </div>
-
-          <TextReveal text="CLIENT FEEDBACK" className="text-4xl sm:text-5xl md:text-6xl font-heading font-bold tracking-tighter text-center" />
-          
-          <p className="text-center mt-6 text-text-muted font-sans text-xl">
-            See what partners and clients have to say about collaborating.
-          </p>
-        </motion.div>
+        <TextReveal text="CLIENT FEEDBACK" className="text-5xl md:text-7xl font-heading font-bold mb-8 md:mb-12 tracking-tighter" />
 
         <div className="flex justify-center gap-6 mt-16 [mask-image:linear-gradient(to_bottom,transparent,black_25%,black_75%,transparent)] max-h-[740px] overflow-hidden">
           <TestimonialsColumn testimonials={firstColumn} duration={15} />
