@@ -92,7 +92,7 @@ export function FloatingVibeStation() {
                 transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
                 className="w-12 h-12 rounded-full border-2 border-neutral-800 bg-neutral-900 flex items-center justify-center relative overflow-hidden shrink-0"
               >
-                <div className="w-4 h-4 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
+                <div className="w-4 h-4 rounded-full bg-white flex items-center justify-center">
                   <div className="w-1 h-1 bg-black rounded-full" />
                 </div>
               </motion.div>
@@ -111,7 +111,7 @@ export function FloatingVibeStation() {
               {bars.map((height, i) => (
                 <motion.div
                   key={i}
-                  className="flex-1 bg-gradient-to-t from-green-400 to-green-600 rounded-t-sm opacity-80"
+                  className="flex-1 bg-white rounded-t-sm opacity-80"
                   animate={{ height: `${height}%` }}
                   transition={{ type: "spring", stiffness: 300, damping: 20 }}
                 />
@@ -119,11 +119,11 @@ export function FloatingVibeStation() {
             </div>
 
             <div className="w-full h-1.5 bg-neutral-800 rounded-full cursor-pointer overflow-hidden group" onClick={handleProgressClick}>
-              <div className="h-full bg-green-500 group-hover:bg-green-400 transition-colors relative" style={{ width: `${progress}%` }} />
+              <div className="h-full bg-white group-hover:bg-white/80 transition-colors relative" style={{ width: `${progress}%` }} />
             </div>
 
             <div className="flex items-center justify-between">
-              <span className={`text-[9px] uppercase tracking-widest font-mono ${isPlaying ? "text-green-500" : "text-neutral-500"}`}>
+              <span className={`text-[9px] uppercase tracking-widest font-mono ${isPlaying ? "text-white" : "text-neutral-500"}`}>
                 {isPlaying ? "Now Playing" : "Paused"}
               </span>
               
@@ -139,9 +139,9 @@ export function FloatingVibeStation() {
         onClick={() => setIsOpen(!isOpen)}
         className="w-12 h-12 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(0,0,0,0.3)] transition-all hover:scale-110 relative"
       >
-        <Music className={`w-5 h-5 ${isPlaying ? 'text-green-400' : 'text-white'}`} />
+        <Music className={`w-5 h-5 ${isPlaying ? "text-white" : "text-white"}`} />
         {isPlaying && (
-          <span className="absolute top-0 right-0 w-3 h-3 bg-green-500 rounded-full animate-pulse border-2 border-black" />
+          <span className="absolute top-0 right-0 w-3 h-3 bg-white rounded-full animate-pulse border-2 border-black" />
         )}
       </button>
 
