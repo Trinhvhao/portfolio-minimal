@@ -30,7 +30,7 @@ const projects: Project[] = [
   {
     title: "Object Detection System",
     tags: ["< PyTorch />", "< YOLOv11 />"],
-    image: "https://images.unsplash.com/photo-1620288863675-5f992f9d85b5?auto=format&fit=crop&w=800&q=80",
+    image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80",
     colSpan: "md:col-span-4",
     description:
       "High-speed computer vision pipeline integrating a custom YOLO training loop for real-time license plate detection and tracking.",
