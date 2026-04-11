@@ -20,7 +20,7 @@ export function TextReveal({ text, className, delay = 0 }: TextRevealProps) {
       variants={{
         visible: {
           transition: {
-            staggerChildren: 0.05,
+            staggerChildren: 0.08,
             delayChildren: delay,
           },
         },
@@ -35,7 +35,7 @@ export function TextReveal({ text, className, delay = 0 }: TextRevealProps) {
               visible: {
                 y: "0%",
                 rotateZ: 0,
-                transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] },
+                transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] },
               },
             }}
           >
