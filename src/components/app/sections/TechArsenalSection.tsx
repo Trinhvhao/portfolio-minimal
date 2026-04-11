@@ -91,7 +91,7 @@ export const TechArsenalSection = React.memo(() => {
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 1.2, ease: [0.33, 1, 0.68, 1] }}
           style={{ perspective: 1000 }}
-          className="text-5xl md:text-7xl font-heading font-bold mb-16 md:mb-20 tracking-tighter"
+          className="text-5xl md:text-7xl font-heading font-bold mb-2 md:mb-3 tracking-tighter"
         >
           TECH ARSENAL
         </motion.h2>
@@ -100,7 +100,7 @@ export const TechArsenalSection = React.memo(() => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ delay: 0.2, duration: 0.6, ease: [0.76, 0, 0.24, 1] }}
-          className="text-text-muted font-mono text-sm md:text-base max-w-2xl mb-12 md:mb-16 px-6 md:px-0 mx-auto w-full"
+          className="text-text-muted font-mono text-sm md:text-base max-w-none mb-10 md:mb-14 text-left w-full"
         >
           The tools, frameworks, and technologies I use to build robust applications.
         </motion.p>

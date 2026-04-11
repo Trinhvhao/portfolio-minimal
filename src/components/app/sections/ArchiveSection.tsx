@@ -146,13 +146,13 @@ export const ArchiveSection = React.memo(function ArchiveSection() {
 
   return (
     <section className="py-12 md:py-16 px-6 max-w-7xl mx-auto relative" onMouseMove={handleMouseMove}>
-      <TextReveal text="THE ARCHIVE" className="text-5xl md:text-7xl font-heading font-bold mb-4 md:mb-6 tracking-tighter" />
+      <TextReveal text="THE ARCHIVE" className="text-5xl md:text-7xl font-heading font-bold mb-2 md:mb-3 tracking-tighter" />
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ delay: 0.2, duration: 0.6, ease: [0.76, 0, 0.24, 1] }}
-          className="text-text-muted font-mono text-sm md:text-base max-w-2xl mb-12 md:mb-16 "
+          className="text-text-muted font-mono text-sm md:text-base max-w-none mb-10 md:mb-14 text-left w-full"
         >
           A history of past projects, commercial work, and ongoing experiments.
         </motion.p>

@@ -111,7 +111,7 @@ export const ProjectsSection = React.memo(function ProjectsSection() {
         whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
         viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 1, ease: [0.25, 1, 0.5, 1] }}
-        className="text-5xl md:text-7xl font-heading font-bold mb-12 md:mb-16 tracking-tighter"
+        className="text-5xl md:text-7xl font-heading font-bold mb-2 md:mb-3 tracking-tighter"
       >
         SELECTED WORKS
       </motion.h2>
@@ -120,7 +120,7 @@ export const ProjectsSection = React.memo(function ProjectsSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ delay: 0.2, duration: 0.6, ease: [0.76, 0, 0.24, 1] }}
-          className="text-text-muted font-mono text-sm md:text-base max-w-2xl mb-12 md:mb-16 "
+          className="text-text-muted font-mono text-sm md:text-base max-w-none mb-10 md:mb-14 text-left w-full"
         >
           A selection of recent development projects and creative case studies.
         </motion.p>
