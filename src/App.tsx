@@ -61,6 +61,12 @@ export default function App() {
       touchMultiplier: 1.2,
     });
 
+    const handleCustomScroll = (e: Event) => {
+      const customEvent = e as CustomEvent;
+      lenis.scrollTo(customEvent.detail.target, { offset: -88 });
+    };
+    window.addEventListener('custom-scroll', handleCustomScroll as EventListener);
+
     let rafId = 0;
     const raf = (time: number) => {
       lenis.raf(time);
@@ -71,6 +77,7 @@ export default function App() {
 
     return () => {
       cancelAnimationFrame(rafId);
+      window.removeEventListener('custom-scroll', handleCustomScroll as EventListener);
       lenis.destroy();
     };
   }, []);

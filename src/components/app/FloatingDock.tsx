@@ -21,8 +21,7 @@ export function FloatingDock() {
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
-      const targetY = Math.max(0, window.scrollY + element.getBoundingClientRect().top - SCROLL_TOP_OFFSET);
-      window.scrollTo({ top: targetY, behavior: "smooth" });
+      window.dispatchEvent(new CustomEvent('custom-scroll', { detail: { target: element } }));
     }
   };
 
