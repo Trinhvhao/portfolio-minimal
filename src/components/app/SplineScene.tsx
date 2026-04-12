@@ -1,8 +1,8 @@
-import { Suspense, lazy, useRef, useEffect, useState, useMemo, type ComponentType } from "react";
-import type { Application } from "@splinetool/runtime";
+import { Suspense, lazy, useEffect, useRef, useState, type ComponentType } from "react";
 import { useInView } from "motion/react";
 
 let splineModulePromise: Promise<unknown> | null = null;
+const scenePrefetchPromises = new Map<string, Promise<void>>();
 
 const preloadSplineModule = () => {
   if (!splineModulePromise) {
@@ -11,10 +11,19 @@ const preloadSplineModule = () => {
   return splineModulePromise;
 };
 
+const prefetchScene = (sceneUrl: string) => {
+  if (!scenePrefetchPromises.has(sceneUrl)) {
+    const promise = fetch(sceneUrl, { cache: "force-cache", mode: "cors" })
+      .then(() => undefined)
+      .catch(() => undefined);
+    scenePrefetchPromises.set(sceneUrl, promise);
+  }
+  return scenePrefetchPromises.get(sceneUrl)!;
+};
+
 type SplineComponentProps = {
   scene: string;
   className?: string;
-  onLoad?: (app: Application) => void;
 };
 
 const Spline = lazy(
@@ -31,41 +40,12 @@ interface SplineSceneProps {
 
 export function SplineScene({ scene, className }: SplineSceneProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const hasEnteredView = useInView(ref, { once: true, margin: "0px" });
-  const isCurrentlyVisible = useInView(ref, { margin: "-45% 0px -45% 0px" });
-  const [shouldLoadSpline, setShouldLoadSpline] = useState(false);
-  const [isPageVisible, setIsPageVisible] = useState(true);
-  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const idleRef = useRef<number | null>(null);
-  const splineAppRef = useRef<Application | null>(null);
-  const visibleRef = useRef(false);
-  const pageVisibleRef = useRef(true);
-
-  const isLowEndDevice = useMemo(() => {
-    if (typeof navigator === "undefined") return false;
-
-    const cores = navigator.hardwareConcurrency ?? 8;
-    const memory = (navigator as Navigator & { deviceMemory?: number }).deviceMemory ?? 8;
-    const conn = (navigator as Navigator & {
-      connection?: { saveData?: boolean; effectiveType?: string };
-    }).connection;
-
-    const saveData = conn?.saveData ?? false;
-    const effectiveType = conn?.effectiveType ?? "4g";
-    const slowNetwork = effectiveType === "slow-2g" || effectiveType === "2g" || effectiveType === "3g";
-
-    return saveData || slowNetwork || cores <= 4 || memory <= 4;
-  }, []);
-
-  const loadDelayMs = useMemo(() => {
-    if (typeof navigator === "undefined") return 300;
-
-    const cores = navigator.hardwareConcurrency ?? 8;
-    const memory = (navigator as Navigator & { deviceMemory?: number }).deviceMemory ?? 8;
-
-    // Keep a short delay on stronger devices and longer delay on weaker ones.
-    return cores <= 4 || memory <= 4 ? 1400 : 350;
-  }, []);
+  const shouldPrepare = useInView(ref, { margin: "1200px 0px 1200px 0px" });
+  const isInActiveViewport = useInView(ref, { margin: "-10% 0px -10% 0px" });
+  const [isScrolling, setIsScrolling] = useState(false);
+  const [isModuleReady, setIsModuleReady] = useState(false);
+  const [isSceneReady, setIsSceneReady] = useState(false);
+  const [shouldMount, setShouldMount] = useState(false);
 
   useEffect(() => {
     const win = window as Window & {
@@ -73,159 +53,113 @@ export function SplineScene({ scene, className }: SplineSceneProps) {
       cancelIdleCallback?: (id: number) => void;
     };
 
-    // Warm up chunk parsing during browser idle to avoid a hard spike when section becomes visible.
+    let idleId: number | null = null;
+    let timeoutId: ReturnType<typeof setTimeout> | null = null;
+
     if (typeof win.requestIdleCallback === "function") {
-      idleRef.current = win.requestIdleCallback(
+      idleId = win.requestIdleCallback(
         () => {
-          void preloadSplineModule();
+          void preloadSplineModule().then(() => {
+            setIsModuleReady(true);
+          });
         },
-        { timeout: 2500 },
+        { timeout: 2200 },
       );
     } else {
-      timeoutRef.current = setTimeout(() => {
-        void preloadSplineModule();
-      }, 1200);
+      timeoutId = setTimeout(() => {
+        void preloadSplineModule().then(() => {
+          setIsModuleReady(true);
+        });
+      }, 1000);
     }
 
     return () => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
+      if (timeoutId) {
+        clearTimeout(timeoutId);
       }
-      if (idleRef.current !== null && typeof win.cancelIdleCallback === "function") {
-        win.cancelIdleCallback(idleRef.current);
+      if (idleId !== null && typeof win.cancelIdleCallback === "function") {
+        win.cancelIdleCallback(idleId);
       }
     };
   }, []);
 
   useEffect(() => {
-    const handleVisibility = () => {
-      const visible = !document.hidden;
-      setIsPageVisible(visible);
-      pageVisibleRef.current = visible;
+    if (!shouldPrepare) return;
 
-      const app = splineAppRef.current;
-      if (!app) return;
+    let cancelled = false;
 
-      if (visibleRef.current && visible) {
-        app.play();
-      } else {
-        app.stop();
-      }
-    };
-
-    document.addEventListener("visibilitychange", handleVisibility);
-    return () => {
-      document.removeEventListener("visibilitychange", handleVisibility);
-    };
-  }, []);
-
-  useEffect(() => {
-    // Preconnect early to reduce handshake latency for .splinecode and assets.
-    const hosts = ["https://prod.spline.design", "https://assets.spline.design"];
-    const links: HTMLLinkElement[] = [];
-
-    hosts.forEach((host) => {
-      const link = document.createElement("link");
-      link.rel = "preconnect";
-      link.href = host;
-      link.crossOrigin = "";
-      document.head.appendChild(link);
-      links.push(link);
+    void Promise.all([preloadSplineModule(), prefetchScene(scene)]).then(() => {
+      if (cancelled) return;
+      setIsModuleReady(true);
+      setIsSceneReady(true);
     });
 
     return () => {
-      links.forEach((link) => {
-        document.head.removeChild(link);
-      });
+      cancelled = true;
     };
-  }, []);
+  }, [scene, shouldPrepare]);
 
   useEffect(() => {
-    if (!hasEnteredView || shouldLoadSpline) return;
+    if (!isInActiveViewport) {
+      setShouldMount(false);
+      return;
+    }
 
-    const scheduleLoad = () => {
-      const win = window as Window & {
-        requestIdleCallback?: (callback: () => void, options?: { timeout: number }) => number;
-        cancelIdleCallback?: (id: number) => void;
-      };
+    if (!isModuleReady || !isSceneReady || isScrolling) {
+      return;
+    }
 
-      if (typeof win.requestIdleCallback === "function") {
-        idleRef.current = win.requestIdleCallback(
-          () => {
-            setShouldLoadSpline(true);
-          },
-          { timeout: 2000 },
-        );
-      } else {
-        timeoutRef.current = setTimeout(() => {
-          setShouldLoadSpline(true);
-        }, loadDelayMs);
-      }
+    const win = window as Window & {
+      requestIdleCallback?: (callback: () => void, options?: { timeout: number }) => number;
+      cancelIdleCallback?: (id: number) => void;
     };
 
-    // Wait for scroll to settle, then load during idle time.
-    timeoutRef.current = setTimeout(scheduleLoad, loadDelayMs);
+    let idleId: number | null = null;
+    let timeoutId: ReturnType<typeof setTimeout> | null = null;
+
+    const mount = () => {
+      setShouldMount(true);
+    };
+
+    if (typeof win.requestIdleCallback === "function") {
+      idleId = win.requestIdleCallback(mount, { timeout: 900 });
+    } else {
+      timeoutId = setTimeout(mount, 260);
+    }
 
     return () => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
+      if (timeoutId) {
+        clearTimeout(timeoutId);
       }
-      const win = window as Window & { cancelIdleCallback?: (id: number) => void };
-      if (idleRef.current !== null && typeof win.cancelIdleCallback === "function") {
-        win.cancelIdleCallback(idleRef.current);
+      if (idleId !== null && typeof win.cancelIdleCallback === "function") {
+        win.cancelIdleCallback(idleId);
       }
     };
-  }, [hasEnteredView, shouldLoadSpline, loadDelayMs]);
+  }, [isInActiveViewport, isModuleReady, isSceneReady, isScrolling]);
 
   useEffect(() => {
-    visibleRef.current = isCurrentlyVisible;
-
-    const app = splineAppRef.current;
-    if (!app) return;
-
-    if (isCurrentlyVisible && isPageVisible) {
-      app.play();
-    } else {
-      app.stop();
-    }
-  }, [isCurrentlyVisible, isPageVisible]);
-
-  useEffect(() => {
-    if (!shouldLoadSpline) return;
-
-    const element = ref.current;
-    if (!element) return;
+    let timeoutId: ReturnType<typeof setTimeout>;
 
     const handleScroll = () => {
-      element.classList.add("pointer-events-none");
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
-      timeoutRef.current = setTimeout(() => {
-        element.classList.remove("pointer-events-none");
-      }, 150);
+      setIsScrolling(true);
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        setIsScrolling(false);
+      }, 240);
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => {
       window.removeEventListener("scroll", handleScroll);
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
-      element.classList.remove("pointer-events-none");
-    };
-  }, [shouldLoadSpline]);
-
-  useEffect(() => {
-    return () => {
-      splineAppRef.current?.stop();
-      splineAppRef.current = null;
+      clearTimeout(timeoutId);
     };
   }, []);
 
+  const showSpline = shouldMount && isInActiveViewport;
+
   return (
-    <div ref={ref} className={className || ""}>
-      {shouldLoadSpline ? (
+    <div ref={ref} className={`${className || ""} ${isScrolling && showSpline ? "pointer-events-none" : ""}`}>
+      {showSpline ? (
         <Suspense
           fallback={
             <div className="w-full h-full flex items-center justify-center bg-bg-dark">
@@ -233,23 +167,12 @@ export function SplineScene({ scene, className }: SplineSceneProps) {
             </div>
           }
         >
-          <Spline
-            scene={scene}
-            className="w-full h-full"
-            onLoad={(app) => {
-              splineAppRef.current = app;
-              if (!(visibleRef.current && pageVisibleRef.current)) {
-                app.stop();
-              }
-            }}
-          />
+          <Spline scene={scene} className="w-full h-full" />
         </Suspense>
       ) : (
-        <div className="w-full h-full flex flex-col items-center justify-center gap-4 bg-bg-dark">
-          <div className="w-8 h-8 border-4 border-text-muted/20 border-t-white/80 rounded-full animate-spin"></div>
-          <p className="text-[10px] font-mono tracking-widest text-text-muted uppercase">
-            {isLowEndDevice ? "Preparing 3D (optimized mode)" : "Preparing 3D"}
-          </p>
+        <div className="w-full h-full flex flex-col items-center justify-center gap-3 bg-bg-dark">
+          <div className="w-8 h-8 border-2 border-text-muted/30 border-t-white/70 rounded-full animate-spin" />
+          <p className="text-[10px] font-mono tracking-widest text-text-muted uppercase">Preparing 3D scene</p>
         </div>
       )}
     </div>

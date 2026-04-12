@@ -66,7 +66,7 @@ const thirdColumn = testimonials.slice(6, 9);
 
 export const TestimonialsSection = React.memo(function TestimonialsSection() {
   return (
-    <section className="bg-transparent my-20 relative px-6 md:px-12 w-full max-w-7xl mx-auto border-t border-text-muted/10 pt-20">
+    <section id="testimonials" className="bg-transparent my-20 relative px-6 md:px-12 w-full max-w-7xl mx-auto border-t border-text-muted/10 pt-20">
       <div className="z-10 mx-auto w-full">
         <TextReveal text="CLIENT FEEDBACK" className="text-5xl md:text-7xl font-heading font-bold mb-2 md:mb-3 tracking-tighter" />
         <motion.p

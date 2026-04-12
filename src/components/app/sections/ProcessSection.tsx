@@ -83,7 +83,7 @@ export const ProcessSection = React.memo(function ProcessSection() {
   }, []);
 
   return (
-    <section className="py-12 md:py-16 px-6 max-w-7xl mx-auto relative">
+    <section id="process" className="py-12 md:py-16 px-6 max-w-7xl mx-auto relative">
       <motion.h2
         initial={{ opacity: 0, x: -50, scale: 0.95 }}
         whileInView={{ opacity: 1, x: 0, scale: 1 }}

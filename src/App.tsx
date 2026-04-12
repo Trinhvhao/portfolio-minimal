@@ -6,6 +6,7 @@ import { AboutSection } from "@/src/components/app/sections/AboutSection";
 import { ArchiveSection } from "@/src/components/app/sections/ArchiveSection";
 import { AiFutureSection } from "@/src/components/app/sections/AiFutureSection";
 import { CapabilitiesSection } from "@/src/components/app/sections/CapabilitiesSection";
+import { CertificationShowcaseSection } from "@/src/components/app/sections/CertificationShowcaseSection";
 import { ContactSection } from "@/src/components/app/sections/ContactSection";
 import { DigitalPresenceSection } from "@/src/components/app/sections/DigitalPresenceSection";
 import { ExperienceSection } from "@/src/components/app/sections/ExperienceSection";
@@ -122,6 +123,7 @@ export default function App() {
       <ExperienceSection />
       <TechArsenalSection />
       <ProjectsSection />
+      <CertificationShowcaseSection />
       <TestimonialsSection />
       <OpenSourceSection />
       <ArchiveSection />
@@ -132,7 +134,6 @@ export default function App() {
       
       <InspirationSection />
       <ContactSection />
-      <FloatingVibeStation />
       <FloatingVibeStation />
       <FloatingDock />
     </div>

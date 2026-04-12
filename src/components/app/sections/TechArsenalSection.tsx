@@ -83,7 +83,7 @@ const TechMarquee = React.memo(() => {
 
 export const TechArsenalSection = React.memo(() => {
   return (
-    <section className="py-16 md:py-20 overflow-hidden">
+    <section id="tech" className="py-16 md:py-20 overflow-hidden">
       <div className="px-6 max-w-7xl mx-auto">
         <motion.h2
           initial={{ opacity: 0, scale: 1.1, rotateY: 15 }}

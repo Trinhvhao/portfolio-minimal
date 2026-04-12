@@ -5,7 +5,7 @@ import { TextReveal } from "@/src/components/ui/text-reveal";
 
 export const InspirationSection = React.memo(function InspirationSection() {
   return (
-    <section className="py-12 md:py-16 px-6 max-w-5xl mx-auto">
+    <section id="inspiration" className="py-12 md:py-16 px-6 max-w-5xl mx-auto">
       <TextReveal text="INSPIRATION" className="text-5xl md:text-7xl font-heading font-bold mb-8 md:mb-12 tracking-tighter" />
 
       <div className="flex flex-col gap-12 text-2xl md:text-4xl text-text-muted max-w-4xl font-sans leading-relaxed">

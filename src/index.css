@@ -73,3 +73,47 @@ html {
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+@keyframes marqueeLeft {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes marqueeRight {
+  from {
+    transform: translate3d(-50%, 0, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.marquee-track {
+  width: max-content;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+}
+
+.marquee-track-left {
+  animation: marqueeLeft 160s linear infinite;
+}
+
+.marquee-track-right {
+  animation: marqueeRight 176s linear infinite;
+}
+
+.marquee-track-paused {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track-left,
+  .marquee-track-right {
+    animation: none;
+    transform: none;
+  }
+}

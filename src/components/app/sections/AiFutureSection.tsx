@@ -6,7 +6,7 @@ import { Spotlight } from "@/src/components/ui/spotlight";
 
 export const AiFutureSection = React.memo(function AiFutureSection() {
   return (
-    <section className="py-16 md:py-20 px-6 max-w-7xl mx-auto relative">
+    <section id="ai-future" className="py-16 md:py-20 px-6 max-w-7xl mx-auto relative">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}

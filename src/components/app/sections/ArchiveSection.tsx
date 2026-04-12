@@ -145,7 +145,7 @@ export const ArchiveSection = React.memo(function ArchiveSection() {
   };
 
   return (
-    <section className="py-12 md:py-16 px-6 max-w-7xl mx-auto relative" onMouseMove={handleMouseMove}>
+    <section id="archive" className="py-12 md:py-16 px-6 max-w-7xl mx-auto relative" onMouseMove={handleMouseMove}>
       <TextReveal text="THE ARCHIVE" className="text-5xl md:text-7xl font-heading font-bold mb-2 md:mb-3 tracking-tighter" />
         <motion.p
           initial={{ opacity: 0, y: 20 }}

@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { Home, User, Briefcase, FolderGit2, FlaskConical, TerminalSquare, Code2, Mail } from "lucide-react";
+import { Home, User, FolderGit2, Mail, Cpu, Bot, Briefcase, MessageSquareQuote } from "lucide-react";
 
 const navItems = [
   { id: "home", label: "Home", icon: Home },
   { id: "about", label: "About", icon: User },
-  { id: "experience", label: "Experience", icon: Briefcase },
+  { id: "capabilities", label: "Capabilities", icon: Cpu },
+  { id: "experience", label: "Mission Logs", icon: Briefcase },
   { id: "projects", label: "Projects", icon: FolderGit2 },
-  { id: "lab", label: "The Lab", icon: FlaskConical },
+  { id: "testimonials", label: "Client Feedback", icon: MessageSquareQuote },
+  { id: "ai-future", label: "AI Future", icon: Bot },
   { id: "contact", label: "Contact", icon: Mail },
 ];
 
@@ -24,9 +26,9 @@ export function FloatingDock() {
   };
 
   return (
-    <div className="fixed top-6 left-1/2 -translate-x-1/2 z-50 pointer-events-none">
+    <div className="fixed top-6 left-1/2 -translate-x-1/2 z-50 pointer-events-none w-[calc(100vw-12px)] md:w-auto">
       <motion.div
-        className="flex items-center gap-1 md:gap-2 px-3 py-2 rounded-2xl bg-black/60 backdrop-blur-xl border border-white/10 shadow-[0_0_30px_rgba(0,0,0,0.5)] pointer-events-auto"
+        className="flex items-center gap-1 md:gap-2 px-2 md:px-3 py-2 rounded-2xl bg-black/60 backdrop-blur-xl border border-white/10 shadow-[0_0_30px_rgba(0,0,0,0.5)] pointer-events-auto overflow-x-auto"
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ type: "spring", stiffness: 200, damping: 20, delay: 1 }}
@@ -38,7 +40,7 @@ export function FloatingDock() {
           return (
             <div
               key={item.id}
-              className="relative group"
+              className="relative group shrink-0"
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
             >
