@@ -17,10 +17,9 @@ import { LabSection } from "@/src/components/app/sections/LabSection";
 import { OpenSourceSection } from "@/src/components/app/sections/OpenSourceSection";
 import { ProcessSection } from "@/src/components/app/sections/ProcessSection";
 import { ProjectsSection } from "@/src/components/app/sections/ProjectsSection";
-import { SkillsSection } from "@/src/components/app/sections/SkillsSection";
 import { TestimonialsSection } from "@/src/components/app/sections/TestimonialsSection";
 import { TechArsenalSection } from "@/src/components/app/sections/TechArsenalSection";
-import { TerminalSection } from "@/src/components/app/sections/TerminalSection";
+import { MarqueeBannerSection } from "@/src/components/app/sections/MarqueeBannerSection";
 import { FloatingVibeStation } from "@/src/components/app/FloatingVibeStation";
 
 export default function App() {
@@ -127,8 +126,7 @@ export default function App() {
       <OpenSourceSection />
       <ArchiveSection />
       <LabSection />
-      <SkillsSection />
-      <TerminalSection />
+      <MarqueeBannerSection />
       <AiFutureSection />
       <DigitalPresenceSection />
       

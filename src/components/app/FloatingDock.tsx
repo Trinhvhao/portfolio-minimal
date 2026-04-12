@@ -8,8 +8,6 @@ const navItems = [
   { id: "experience", label: "Experience", icon: Briefcase },
   { id: "projects", label: "Projects", icon: FolderGit2 },
   { id: "lab", label: "The Lab", icon: FlaskConical },
-  { id: "skills", label: "Skills", icon: Code2 },
-  { id: "terminal", label: "Terminal", icon: TerminalSquare },
   { id: "contact", label: "Contact", icon: Mail },
 ];
 
