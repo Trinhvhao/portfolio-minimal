@@ -110,6 +110,16 @@ html {
   animation-play-state: paused;
 }
 
+.section-compact-flow > .section-compact-block + .section-compact-block {
+  margin-top: -1rem;
+}
+
+@media (min-width: 768px) {
+  .section-compact-flow > .section-compact-block + .section-compact-block {
+    margin-top: -1.5rem;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .marquee-track-left,
   .marquee-track-right {

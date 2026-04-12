@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import Lenis from "lenis";
 import { projects } from "@/src/components/app/data";
@@ -22,6 +22,70 @@ import { TestimonialsSection } from "@/src/components/app/sections/TestimonialsS
 import { TechArsenalSection } from "@/src/components/app/sections/TechArsenalSection";
 import { MarqueeBannerSection } from "@/src/components/app/sections/MarqueeBannerSection";
 import { FloatingVibeStation } from "@/src/components/app/FloatingVibeStation";
+
+type SectionRevealConfig = {
+  initial: Record<string, number | string>;
+  whileInView: Record<string, number | string>;
+  transition: {
+    duration: number;
+    ease: [number, number, number, number];
+    delay?: number;
+  };
+  viewport?: {
+    once: boolean;
+    margin: string;
+  };
+};
+
+const REVEAL_PRESETS: SectionRevealConfig[] = [
+  {
+    initial: { opacity: 0, y: 40 },
+    whileInView: { opacity: 1, y: 0 },
+    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
+  },
+  {
+    initial: { opacity: 0, x: -48 },
+    whileInView: { opacity: 1, x: 0 },
+    transition: { duration: 0.75, ease: [0.16, 1, 0.3, 1] },
+  },
+  {
+    initial: { opacity: 0, x: 48 },
+    whileInView: { opacity: 1, x: 0 },
+    transition: { duration: 0.75, ease: [0.16, 1, 0.3, 1] },
+  },
+  {
+    initial: { opacity: 0, scale: 0.96, y: 24 },
+    whileInView: { opacity: 1, scale: 1, y: 0 },
+    transition: { duration: 0.8, ease: [0.2, 0.65, 0.3, 1] },
+  },
+  {
+    initial: { opacity: 0, rotateX: -8, y: 28 },
+    whileInView: { opacity: 1, rotateX: 0, y: 0 },
+    transition: { duration: 0.85, ease: [0.22, 1, 0.36, 1] },
+  },
+  {
+    initial: { opacity: 0, filter: "blur(8px)", y: 20 },
+    whileInView: { opacity: 1, filter: "blur(0px)", y: 0 },
+    transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] },
+  },
+];
+
+function SectionReveal({ index, children }: { index: number; children: ReactNode }) {
+  const config = REVEAL_PRESETS[index % REVEAL_PRESETS.length];
+
+  return (
+    <motion.div
+      className="section-compact-block"
+      initial={config.initial}
+      whileInView={config.whileInView}
+      viewport={config.viewport ?? { once: true, margin: "-110px" }}
+      transition={config.transition}
+      style={{ perspective: 1000 }}
+    >
+      {children}
+    </motion.div>
+  );
+}
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -117,23 +181,56 @@ export default function App() {
       </div>
 
       <HeroSection />
-      <AboutSection />
-      <CapabilitiesSection />
-      <ProcessSection />
-      <ExperienceSection />
-      <TechArsenalSection />
-      <ProjectsSection />
-      <CertificationShowcaseSection />
-      <TestimonialsSection />
-      <OpenSourceSection />
-      <ArchiveSection />
-      <LabSection />
-      <MarqueeBannerSection />
-      <AiFutureSection />
-      <DigitalPresenceSection />
-      
-      <InspirationSection />
-      <ContactSection />
+      <div className="section-compact-flow">
+        <SectionReveal index={0}>
+          <AboutSection />
+        </SectionReveal>
+        <SectionReveal index={1}>
+          <CapabilitiesSection />
+        </SectionReveal>
+        <SectionReveal index={2}>
+          <ProcessSection />
+        </SectionReveal>
+        <SectionReveal index={3}>
+          <ExperienceSection />
+        </SectionReveal>
+        <SectionReveal index={4}>
+          <TechArsenalSection />
+        </SectionReveal>
+        <SectionReveal index={5}>
+          <ProjectsSection />
+        </SectionReveal>
+        <SectionReveal index={6}>
+          <CertificationShowcaseSection />
+        </SectionReveal>
+        <SectionReveal index={7}>
+          <TestimonialsSection />
+        </SectionReveal>
+        <SectionReveal index={8}>
+          <OpenSourceSection />
+        </SectionReveal>
+        <SectionReveal index={9}>
+          <ArchiveSection />
+        </SectionReveal>
+        <SectionReveal index={10}>
+          <LabSection />
+        </SectionReveal>
+        <SectionReveal index={11}>
+          <MarqueeBannerSection />
+        </SectionReveal>
+        <SectionReveal index={12}>
+          <AiFutureSection />
+        </SectionReveal>
+        <SectionReveal index={13}>
+          <DigitalPresenceSection />
+        </SectionReveal>
+        <SectionReveal index={14}>
+          <InspirationSection />
+        </SectionReveal>
+        <SectionReveal index={15}>
+          <ContactSection />
+        </SectionReveal>
+      </div>
       <FloatingVibeStation />
       <FloatingDock />
     </div>

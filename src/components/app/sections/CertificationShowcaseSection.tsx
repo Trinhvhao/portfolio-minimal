@@ -45,7 +45,7 @@ export const CertificationShowcaseSection = React.memo(function CertificationSho
   const [activeId, setActiveId] = useState<number>(3);
 
   return (
-    <section id="certificates" className="py-24 md:py-32 px-6 max-w-7xl mx-auto">
+    <section id="certificates" className="py-14 md:py-18 px-6 max-w-7xl mx-auto">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
