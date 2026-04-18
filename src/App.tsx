@@ -14,14 +14,16 @@ import { FloatingDock } from "@/src/components/app/FloatingDock";
 import { FilmGrain } from "@/src/components/ui/film-grain";
 import { HeroSection } from "@/src/components/app/sections/HeroSection";
 import { InspirationSection } from "@/src/components/app/sections/InspirationSection";
-import { LabSection } from "@/src/components/app/sections/LabSection";
 import { OpenSourceSection } from "@/src/components/app/sections/OpenSourceSection";
 import { ProcessSection } from "@/src/components/app/sections/ProcessSection";
 import { ProjectsSection } from "@/src/components/app/sections/ProjectsSection";
+import { TimelineSkillsSection } from "@/src/components/app/sections/TimelineSkillsSection";
 import { TestimonialsSection } from "@/src/components/app/sections/TestimonialsSection";
 import { TechArsenalSection } from "@/src/components/app/sections/TechArsenalSection";
 import { MarqueeBannerSection } from "@/src/components/app/sections/MarqueeBannerSection";
 import { FloatingVibeStation } from "@/src/components/app/FloatingVibeStation";
+import { ResumeSection } from "@/src/components/app/sections/ResumeSection";
+import { FileText } from "lucide-react";
 
 type SectionRevealConfig = {
   initial: Record<string, number | string>;
@@ -123,6 +125,7 @@ export default function App() {
       duration: 1.2,
       smoothWheel: true,
       touchMultiplier: 1.2,
+      prevent: (node) => node instanceof HTMLElement && node.closest('[data-modal-scroll="true"]') !== null,
     });
 
     const handleCustomScroll = (e: Event) => {
@@ -201,19 +204,19 @@ export default function App() {
           <ProjectsSection />
         </SectionReveal>
         <SectionReveal index={6}>
-          <CertificationShowcaseSection />
+          <TimelineSkillsSection />
         </SectionReveal>
         <SectionReveal index={7}>
-          <TestimonialsSection />
+          <CertificationShowcaseSection />
         </SectionReveal>
         <SectionReveal index={8}>
-          <OpenSourceSection />
+          <TestimonialsSection />
         </SectionReveal>
         <SectionReveal index={9}>
-          <ArchiveSection />
+          <OpenSourceSection />
         </SectionReveal>
         <SectionReveal index={10}>
-          <LabSection />
+          <ArchiveSection />
         </SectionReveal>
         <SectionReveal index={11}>
           <MarqueeBannerSection />
@@ -233,6 +236,18 @@ export default function App() {
       </div>
       <FloatingVibeStation />
       <FloatingDock />
+      <ResumeSection />
+
+      {/* Floating Resume Button */}
+      <button
+        onClick={() => window.dispatchEvent(new CustomEvent('open-resume'))}
+        className="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-[60] flex items-center gap-2 px-4 py-3 bg-white text-black rounded-full font-mono text-sm font-bold shadow-2xl hover:scale-105 transition-transform"
+      >
+        <FileText className="w-4 h-4" />
+        <span className="hidden md:inline">VIEW RESUME</span>
+        <span className="inline md:hidden">RESUME</span>
+      </button>
+
     </div>
   );
 }

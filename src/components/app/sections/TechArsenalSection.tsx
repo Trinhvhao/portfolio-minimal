@@ -41,11 +41,10 @@ const TechMarquee = React.memo(() => {
             <img
               src={tech.icon}
               alt={tech.name}
-              className="w-12 h-12 md:w-20 md:h-20 grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300 shrink-0"
+              className="w-12 h-12 md:w-20 md:h-20 grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 group-hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.5)] transition-all duration-300 shrink-0"
             />
             <span
-              className="text-5xl md:text-8xl font-heading font-bold text-transparent transition-all duration-300 group-hover:text-white shrink-0"
-              style={{ WebkitTextStroke: "1px rgba(255,255,255,0.2)" }}
+              className="text-5xl md:text-8xl font-heading font-bold text-white transition-all duration-300 group-hover:drop-shadow-[0_0_20px_rgba(255,255,255,0.8)] shrink-0"
             >
               {tech.name.toUpperCase()}
             </span>
@@ -63,11 +62,10 @@ const TechMarquee = React.memo(() => {
             <img
               src={tech.icon}
               alt={tech.name}
-              className="w-12 h-12 md:w-20 md:h-20 grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300 shrink-0"
+              className="w-12 h-12 md:w-20 md:h-20 grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 group-hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.5)] transition-all duration-300 shrink-0"
             />
             <span
-              className="text-5xl md:text-8xl font-heading font-bold text-transparent transition-all duration-300 group-hover:text-white shrink-0"
-              style={{ WebkitTextStroke: "1px rgba(255,255,255,0.2)" }}
+              className="text-5xl md:text-8xl font-heading font-bold text-white transition-all duration-300 group-hover:drop-shadow-[0_0_20px_rgba(255,255,255,0.8)] shrink-0"
             >
               {tech.name.toUpperCase()}
             </span>

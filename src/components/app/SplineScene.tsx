@@ -1,178 +1,84 @@
-import { Suspense, lazy, useEffect, useRef, useState, type ComponentType } from "react";
+import { Suspense, lazy, useEffect, useRef, useState } from "react";
 import { useInView } from "motion/react";
 
-let splineModulePromise: Promise<unknown> | null = null;
-const scenePrefetchPromises = new Map<string, Promise<void>>();
+const Spline = lazy(() => import("@splinetool/react-spline"));
 
-const preloadSplineModule = () => {
-  if (!splineModulePromise) {
-    splineModulePromise = import("@splinetool/react-spline");
-  }
-  return splineModulePromise;
-};
-
-const prefetchScene = (sceneUrl: string) => {
-  if (!scenePrefetchPromises.has(sceneUrl)) {
-    const promise = fetch(sceneUrl, { cache: "force-cache", mode: "cors" })
-      .then(() => undefined)
-      .catch(() => undefined);
-    scenePrefetchPromises.set(sceneUrl, promise);
-  }
-  return scenePrefetchPromises.get(sceneUrl)!;
-};
-
-type SplineComponentProps = {
-  scene: string;
-  className?: string;
-};
-
-const Spline = lazy(
-  async () =>
-    (await preloadSplineModule()) as {
-      default: ComponentType<SplineComponentProps>;
-    },
-);
+const SCROLL_IDLE_DELAY_MS = 140;
+const LOW_END_CORE_THRESHOLD = 4;
+const LOW_END_MEMORY_THRESHOLD_GB = 4;
 
 interface SplineSceneProps {
   scene: string;
   className?: string;
 }
 
+function shouldUseLiteMode() {
+  if (typeof window === "undefined") {
+    return false;
+  }
+
+  const nav = navigator as Navigator & { deviceMemory?: number };
+  const cores = nav.hardwareConcurrency ?? 8;
+  const memory = nav.deviceMemory ?? 8;
+  const prefersReducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
+  const coarsePointer = window.matchMedia?.("(pointer: coarse)").matches ?? false;
+
+  return prefersReducedMotion || coarsePointer || cores <= LOW_END_CORE_THRESHOLD || memory <= LOW_END_MEMORY_THRESHOLD_GB;
+}
+
 export function SplineScene({ scene, className }: SplineSceneProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const shouldPrepare = useInView(ref, { margin: "1200px 0px 1200px 0px" });
-  const isInActiveViewport = useInView(ref, { margin: "-10% 0px -10% 0px" });
-  const [isScrolling, setIsScrolling] = useState(false);
-  const [isModuleReady, setIsModuleReady] = useState(false);
-  const [isSceneReady, setIsSceneReady] = useState(false);
-  const [shouldMount, setShouldMount] = useState(false);
+  const isInView = useInView(ref, { margin: "0px", amount: 0.35 });
+  const [isScrollIdle, setIsScrollIdle] = useState(true);
+  const [liteMode, setLiteMode] = useState(false);
 
   useEffect(() => {
-    const win = window as Window & {
-      requestIdleCallback?: (callback: () => void, options?: { timeout: number }) => number;
-      cancelIdleCallback?: (id: number) => void;
-    };
-
-    let idleId: number | null = null;
-    let timeoutId: ReturnType<typeof setTimeout> | null = null;
-
-    if (typeof win.requestIdleCallback === "function") {
-      idleId = win.requestIdleCallback(
-        () => {
-          void preloadSplineModule().then(() => {
-            setIsModuleReady(true);
-          });
-        },
-        { timeout: 2200 },
-      );
-    } else {
-      timeoutId = setTimeout(() => {
-        void preloadSplineModule().then(() => {
-          setIsModuleReady(true);
-        });
-      }, 1000);
-    }
-
-    return () => {
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
-      if (idleId !== null && typeof win.cancelIdleCallback === "function") {
-        win.cancelIdleCallback(idleId);
-      }
-    };
+    setLiteMode(shouldUseLiteMode());
   }, []);
 
   useEffect(() => {
-    if (!shouldPrepare) return;
-
-    let cancelled = false;
-
-    void Promise.all([preloadSplineModule(), prefetchScene(scene)]).then(() => {
-      if (cancelled) return;
-      setIsModuleReady(true);
-      setIsSceneReady(true);
-    });
-
-    return () => {
-      cancelled = true;
-    };
-  }, [scene, shouldPrepare]);
-
-  useEffect(() => {
-    if (!isInActiveViewport) {
-      setShouldMount(false);
-      return;
-    }
-
-    if (!isModuleReady || !isSceneReady || isScrolling) {
-      return;
-    }
-
-    const win = window as Window & {
-      requestIdleCallback?: (callback: () => void, options?: { timeout: number }) => number;
-      cancelIdleCallback?: (id: number) => void;
-    };
-
-    let idleId: number | null = null;
-    let timeoutId: ReturnType<typeof setTimeout> | null = null;
-
-    const mount = () => {
-      setShouldMount(true);
-    };
-
-    if (typeof win.requestIdleCallback === "function") {
-      idleId = win.requestIdleCallback(mount, { timeout: 900 });
-    } else {
-      timeoutId = setTimeout(mount, 260);
-    }
-
-    return () => {
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
-      if (idleId !== null && typeof win.cancelIdleCallback === "function") {
-        win.cancelIdleCallback(idleId);
-      }
-    };
-  }, [isInActiveViewport, isModuleReady, isSceneReady, isScrolling]);
-
-  useEffect(() => {
-    let timeoutId: ReturnType<typeof setTimeout>;
+    let idleTimeout: ReturnType<typeof setTimeout>;
 
     const handleScroll = () => {
-      setIsScrolling(true);
-      clearTimeout(timeoutId);
-      timeoutId = setTimeout(() => {
-        setIsScrolling(false);
-      }, 240);
+      setIsScrollIdle(false);
+      clearTimeout(idleTimeout);
+      idleTimeout = setTimeout(() => {
+        setIsScrollIdle(true);
+      }, SCROLL_IDLE_DELAY_MS);
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => {
       window.removeEventListener("scroll", handleScroll);
-      clearTimeout(timeoutId);
+      clearTimeout(idleTimeout);
     };
   }, []);
 
-  const showSpline = shouldMount && isInActiveViewport;
+  const shouldRenderSpline = !liteMode && isInView && isScrollIdle;
+
+  const statusText = liteMode
+    ? "3D DISABLED ON THIS DEVICE"
+    : isInView && !isScrollIdle
+      ? "3D PAUSED WHILE SCROLLING"
+      : "3D PAUSED OFFSCREEN";
 
   return (
-    <div ref={ref} className={`${className || ""} ${isScrolling && showSpline ? "pointer-events-none" : ""}`}>
-      {showSpline ? (
+    <div ref={ref} className={`${className || ""} relative flex items-center justify-center`}>
+      {shouldRenderSpline ? (
         <Suspense
           fallback={
-            <div className="w-full h-full flex items-center justify-center bg-bg-dark">
-              <div className="w-8 h-8 border-4 border-text-muted/20 border-t-white/80 rounded-full animate-spin"></div>
+            <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-bg-dark border border-white/5 rounded-lg">
+              <div className="w-8 h-8 border-2 border-text-muted/30 border-t-white/70 rounded-full animate-spin" />
+              <p className="text-[10px] font-mono tracking-widest text-text-muted uppercase">LOADING 3D ASSETS...</p>
             </div>
           }
         >
           <Spline scene={scene} className="w-full h-full" />
         </Suspense>
       ) : (
-        <div className="w-full h-full flex flex-col items-center justify-center gap-3 bg-bg-dark">
-          <div className="w-8 h-8 border-2 border-text-muted/30 border-t-white/70 rounded-full animate-spin" />
-          <p className="text-[10px] font-mono tracking-widest text-text-muted uppercase">Preparing 3D scene</p>
+          <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-bg-dark/60 border border-white/5 rounded-lg opacity-60">
+          <div className="w-8 h-8 border-2 border-dashed border-text-muted/40 rounded-full" />
+          <p className="text-[10px] font-mono tracking-widest text-text-muted uppercase opacity-70">{statusText}</p>
         </div>
       )}
     </div>

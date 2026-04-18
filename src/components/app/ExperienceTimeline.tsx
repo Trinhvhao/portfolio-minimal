@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "motion/react";
-import { useRef } from "react";
 import { Briefcase, Calendar } from "lucide-react";
 
 type Experience = {
@@ -10,7 +9,6 @@ type Experience = {
   period: string;
   description: string;
   tech: string[];
-  color: string;
 };
 
 const EXPERIENCES: Experience[] = [
@@ -22,7 +20,6 @@ const EXPERIENCES: Experience[] = [
     description:
       "Architected and developed scalable microservices and high-performance web applications. Led a team of 4 developers to migrate legacy systems to Next.js and Node.js, improving load times by 40%.",
     tech: ["Next.js", "TypeScript", "Node.js", "PostgreSQL", "AWS"],
-    color: "#00F2FE",
   },
   {
     id: "exp2",
@@ -32,7 +29,6 @@ const EXPERIENCES: Experience[] = [
     description:
       "Built interactive, award-winning marketing websites and landing pages. Specialized in creative coding, WebGL, and complex CSS animations to deliver highly engaging user experiences.",
     tech: ["React", "Three.js", "Framer Motion", "Tailwind CSS"],
-    color: "#A855F7",
   },
   {
     id: "exp3",
@@ -42,24 +38,84 @@ const EXPERIENCES: Experience[] = [
     description:
       "Developed and maintained multiple client-facing dashboards. Collaborated closely with designers to implement pixel-perfect UIs and integrated RESTful APIs.",
     tech: ["JavaScript", "HTML/CSS", "Vue.js", "Firebase"],
-    color: "#F59E0B",
   },
 ];
 
 export function ExperienceTimeline() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const iconRefs = useRef<Array<HTMLDivElement | null>>([]);
+  const [iconCenters, setIconCenters] = useState<number[]>([]);
+  const [activeItems, setActiveItems] = useState<boolean[]>(() => EXPERIENCES.map(() => false));
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start center", "end center"]
+    offset: ["start center", "end center"],
   });
+
   const lineHeight = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+
+  const measureIconCenters = useCallback(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const containerTop = container.getBoundingClientRect().top + window.scrollY;
+    const nextCenters = iconRefs.current.map((iconRef) => {
+      if (!iconRef) return Number.POSITIVE_INFINITY;
+      const rect = iconRef.getBoundingClientRect();
+      const topInsideContainer = rect.top + window.scrollY - containerTop;
+      return topInsideContainer + rect.height / 2;
+    });
+
+    setIconCenters(nextCenters);
+  }, []);
+
+  useEffect(() => {
+    measureIconCenters();
+    const resizeHandler = () => measureIconCenters();
+    window.addEventListener("resize", resizeHandler);
+
+    const raf = requestAnimationFrame(() => {
+      measureIconCenters();
+    });
+
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("resize", resizeHandler);
+    };
+  }, [measureIconCenters]);
+
+  useEffect(() => {
+    const stopWatching = scrollYProgress.on("change", (value) => {
+      const container = containerRef.current;
+      if (!container || iconCenters.length === 0) return;
+
+      const lineProgressPx = value * container.offsetHeight;
+      const nextActiveItems = iconCenters.map((centerY) => lineProgressPx >= centerY - 6);
+
+      setActiveItems((previousItems) => {
+        if (
+          previousItems.length === nextActiveItems.length &&
+          previousItems.every((item, index) => item === nextActiveItems[index])
+        ) {
+          return previousItems;
+        }
+
+        return nextActiveItems;
+      });
+    });
+
+    return () => {
+      stopWatching();
+    };
+  }, [iconCenters, scrollYProgress]);
+
   return (
     <div className="w-full max-w-4xl mx-auto">
       <div ref={containerRef} className="relative">
-        <div className="absolute left-[15px] md:left-[39px] top-2 bottom-2 w-[2px] bg-white/5" />
-        <motion.div 
-          style={{ height: lineHeight }} 
-          className="absolute left-[15px] md:left-[39px] top-2 w-[2px] bg-gradient-to-b from-[#00F2FE] via-[#A855F7] to-transparent origin-top z-0"
+        <div className="absolute left-[15px] md:left-[39px] top-2 bottom-2 w-[3px] bg-white/10" />
+        <motion.div
+          style={{ height: lineHeight }}
+          className="absolute left-[15px] md:left-[39px] top-2 w-[3px] bg-gradient-to-b from-[#04103A] via-[#0F2E86] to-[#2E68EA] origin-top z-0 shadow-[0_0_22px_rgba(46,104,234,0.7)]"
         />
 
         <div className="flex flex-col gap-12">
@@ -72,29 +128,35 @@ export function ExperienceTimeline() {
               transition={{ duration: 0.6, delay: index * 0.2 }}
               className="relative flex gap-6 md:gap-12 group"
             >
-              <div className="relative z-10 flex flex-col items-center mt-1">
+              <div
+                ref={(element) => {
+                  iconRefs.current[index] = element;
+                }}
+                className="relative z-10 flex flex-col items-center mt-1"
+              >
                 <div
-                  className="w-8 h-8 md:w-20 md:h-20 rounded-full bg-black border-2 flex items-center justify-center transition-all duration-500 group-hover:scale-110 shadow-lg"
-                  style={{
-                    borderColor: "rgba(255,255,255,0.2)",
-                    boxShadow: "0 0 0 rgba(0,0,0,0)",
-                  }}
+                  className={`w-8 h-8 md:w-20 md:h-20 rounded-full border-2 flex items-center justify-center transition-all duration-500 shadow-lg ${
+                    activeItems[index]
+                      ? "bg-blue-500/10 border-blue-400 scale-110 shadow-[0_0_24px_rgba(56,112,255,0.55)]"
+                      : "bg-black border-white/20"
+                  }`}
                 >
-                  <Briefcase className="w-4 h-4 md:w-8 md:h-8 text-neutral-400 group-hover:text-white transition-colors" />
-
-                  <div
-                    className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-md"
-                    style={{ backgroundColor: exp.color, opacity: 0.2 }}
+                  <Briefcase
+                    className={`w-4 h-4 md:w-8 md:h-8 transition-colors ${
+                      activeItems[index] ? "text-blue-200" : "text-neutral-400"
+                    }`}
                   />
                 </div>
               </div>
 
               <div className="flex-1">
-                <div className="bg-black/40 backdrop-blur-sm border border-white/10 rounded-2xl p-6 md:p-8 transition-all duration-500 group-hover:bg-white/5 group-hover:border-white/20 relative overflow-hidden">
-                  <div
-                    className="absolute -top-20 -right-20 w-40 h-40 rounded-full blur-3xl opacity-0 group-hover:opacity-20 transition-opacity duration-500 pointer-events-none"
-                    style={{ backgroundColor: exp.color }}
-                  />
+                <div
+                  className={`backdrop-blur-sm border rounded-2xl p-6 md:p-8 transition-all duration-500 relative overflow-hidden ${
+                    activeItems[index]
+                      ? "bg-blue-500/[0.07] border-blue-400/70 shadow-[0_0_35px_rgba(23,84,223,0.25)]"
+                      : "bg-black/40 border-white/10"
+                  }`}
+                >
 
                   <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
                     <div>
@@ -104,7 +166,13 @@ export function ExperienceTimeline() {
                       </div>
                     </div>
 
-                    <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-mono text-neutral-300 whitespace-nowrap h-fit">
+                    <div
+                      className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-mono whitespace-nowrap h-fit transition-colors ${
+                        activeItems[index]
+                          ? "bg-blue-500/15 border border-blue-300/50 text-blue-100"
+                          : "bg-white/5 border border-white/10 text-neutral-300"
+                      }`}
+                    >
                       <Calendar className="w-3 h-3" />
                       {exp.period}
                     </div>

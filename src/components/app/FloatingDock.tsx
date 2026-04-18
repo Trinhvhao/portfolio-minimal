@@ -26,9 +26,9 @@ export function FloatingDock() {
   };
 
   return (
-    <div className="fixed top-6 left-1/2 -translate-x-1/2 z-50 pointer-events-none w-[calc(100vw-12px)] md:w-auto">
+    <div className="fixed top-6 left-1/2 -translate-x-1/2 z-50 pointer-events-none w-[calc(100vw-[24px])] sm:w-auto flex justify-center">
       <motion.div
-        className="flex items-center gap-1 md:gap-2 px-2 md:px-3 py-2 rounded-2xl bg-black/60 backdrop-blur-xl border border-white/10 shadow-[0_0_30px_rgba(0,0,0,0.5)] pointer-events-auto overflow-x-auto"
+        className="flex items-center justify-center flex-wrap sm:flex-nowrap gap-1 md:gap-2 px-2 md:px-3 py-2 rounded-2xl bg-black/60 backdrop-blur-xl border border-white/10 shadow-[0_0_30px_rgba(0,0,0,0.5)] pointer-events-auto"
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ type: "spring", stiffness: 200, damping: 20, delay: 1 }}
