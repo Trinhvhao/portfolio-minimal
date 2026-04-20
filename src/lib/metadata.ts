@@ -10,6 +10,7 @@ export interface MetadataConfig {
     twitterTitle?: string;
     twitterDescription?: string;
     twitterImage?: string;
+    twitterCard?: "summary" | "summary_large_image" | "app" | "player";
     canonical?: string;
 }
 
@@ -26,6 +27,7 @@ export const defaultMetadata: MetadataConfig = {
     twitterTitle: "Trịnh Văn Hào – Full Stack Developer | Code, Product Thinking & AI",
     twitterDescription: "Kết hợp tư duy sản phẩm, sáng tạo và AI để xây dựng trải nghiệm web độc đáo. Portfolio của Trịnh Văn Hào - Full Stack Developer.",
     twitterImage: `${SITE_URL}/images/trinhhao3.jpg`,
+    twitterCard: "summary_large_image",
     canonical: `${SITE_URL}/`
 };
 
@@ -44,8 +46,14 @@ function updateMetaTag(selector: string, content: string): void {
 
     if (!element) {
         element = document.createElement('meta');
-        const [attr, value] = selector.replace(/[\[\]]/g, '').split('=');
-        element.setAttribute(attr, value.replace(/['"]/g, ''));
+        const attrMatch = selector.match(/\[([^=\]]+)=['\"]?([^'\"\]]+)['\"]?\]/);
+
+        if (!attrMatch) {
+            return;
+        }
+
+        const [, attr, value] = attrMatch;
+        element.setAttribute(attr, value);
         document.head.appendChild(element);
     }
 
@@ -111,6 +119,11 @@ export function updateMetadata(config: MetadataConfig): void {
 
     if (metadata.twitterImage) {
         updateMetaTag('meta[name="twitter:image"]', metadata.twitterImage);
+    }
+
+    if (metadata.twitterCard) {
+        updateMetaTag('meta[name="twitter:card"]', metadata.twitterCard);
+        updateMetaTag('meta[property="twitter:card"]', metadata.twitterCard);
     }
 
     // Update canonical URL
