@@ -1,0 +1,11 @@
+# robots.txt for Trinh Van Hao Portfolio
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /*.json$
+
+# Sitemap location
+Sitemap: https://portfolio-minimal-gilt.vercel.app/sitemap.xml
+
+# Crawl-delay for polite crawling
+Crawl-delay: 1

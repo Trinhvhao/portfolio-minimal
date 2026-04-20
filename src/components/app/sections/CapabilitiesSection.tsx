@@ -18,12 +18,6 @@ const capabilitiesData: Capability[] = [
     tags: ["< LangChain />", "< OpenAI />", "< FastAPI />"],
   },
   {
-    title: "COMPUTER VISION & OCR",
-    description:
-      "Deploying deep learning models for advanced object detection, plate recognition, and text extraction using state-of-the-art vision architectures.",
-    tags: ["< PyTorch />", "< YOLO />", "< OpenCV />"],
-  },
-  {
     title: "SYSTEM ARCHITECTURE",
     description:
       "Designing robust, secure, and easily deployable services. Managing containerized applications, scalable cloud databases, and continuous integration.",

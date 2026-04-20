@@ -7,37 +7,50 @@ type Experience = {
   role: string;
   company: string;
   period: string;
-  description: string;
-  tech: string[];
+  overview: string;
+  bullets: string[];
+  highlights: string[];
 };
 
 const EXPERIENCES: Experience[] = [
   {
     id: "exp1",
-    role: "Senior Fullstack Engineer",
-    company: "TechNova Solutions",
+    role: "Website Manager",
+    company: "Zaka Edu",
     period: "2023 - Present",
-    description:
-      "Architected and developed scalable microservices and high-performance web applications. Led a team of 4 developers to migrate legacy systems to Next.js and Node.js, improving load times by 40%.",
-    tech: ["Next.js", "TypeScript", "Node.js", "PostgreSQL", "AWS"],
+    overview: "Owned the end-to-end digital presence of the education center, balancing platform reliability with growth-oriented communication.",
+    bullets: [
+      "Developed and operated the center website with a strong focus on usability and stability.",
+      "Designed and optimized user-facing features to improve engagement and learning journey flow.",
+      "Created and deployed media assets for campaigns to strengthen brand recognition and interaction.",
+    ],
+    highlights: ["Website Operations", "Feature Optimization", "Media Production", "Brand Growth"],
   },
   {
     id: "exp2",
-    role: "Frontend Developer",
-    company: "CreativeSpace Agency",
-    period: "2021 - 2023",
-    description:
-      "Built interactive, award-winning marketing websites and landing pages. Specialized in creative coding, WebGL, and complex CSS animations to deliver highly engaging user experiences.",
-    tech: ["React", "Three.js", "Framer Motion", "Tailwind CSS"],
+    role: "AI Intern",
+    company: "AIoT Lab - Dai Nam University",
+    period: "07/2025 - Present",
+    overview: "Contributed to applied AI projects from data preparation to model development in real-world business contexts.",
+    bullets: [
+      "Built and refined a text emotion recognition model for Ngoc Dung Aesthetic Clinic.",
+      "Contributed to a tea-harvest recognition model for Van Thang Cooperative.",
+      "Collected, cleaned, and labeled datasets to support robust model training and evaluation.",
+    ],
+    highlights: ["NLP", "Computer Vision", "Data Labeling", "Model Development"],
   },
   {
     id: "exp3",
-    role: "Web Developer",
-    company: "StartUp Inc",
-    period: "2019 - 2021",
-    description:
-      "Developed and maintained multiple client-facing dashboards. Collaborated closely with designers to implement pixel-perfect UIs and integrated RESTful APIs.",
-    tech: ["JavaScript", "HTML/CSS", "Vue.js", "Firebase"],
+    role: "Freelance Developer",
+    company: "Independent",
+    period: "Project-based",
+    overview: "Delivered custom software solutions for clients, from concept validation to production-ready releases.",
+    bullets: [
+      "Developed AI-assisted HR management systems tailored to client operational workflows.",
+      "Built event management platforms with streamlined registration and coordination features.",
+      "Implemented a mini social network project in Java, including core social interaction modules.",
+    ],
+    highlights: ["AI-enabled HRM", "Event Platforms", "Java Systems", "Client Delivery"],
   },
 ];
 
@@ -178,15 +191,21 @@ export function ExperienceTimeline() {
                     </div>
                   </div>
 
-                  <p className="text-neutral-400 leading-relaxed font-sans text-sm md:text-base mb-6">{exp.description}</p>
+                  <p className="text-neutral-400 leading-relaxed font-sans text-sm md:text-base mb-4">{exp.overview}</p>
+
+                  <ul className="list-disc pl-5 space-y-2 text-neutral-300 leading-relaxed font-sans text-sm md:text-base mb-6 marker:text-blue-300">
+                    {exp.bullets.map((bullet, i) => (
+                      <li key={i}>{bullet}</li>
+                    ))}
+                  </ul>
 
                   <div className="flex flex-wrap gap-2">
-                    {exp.tech.map((tech, i) => (
+                    {exp.highlights.map((item, i) => (
                       <span
                         key={i}
                         className="px-3 py-1 text-[10px] md:text-xs font-mono rounded-full border border-white/10 text-neutral-400 bg-black/50 group-hover:border-white/30 group-hover:text-neutral-200 transition-colors"
                       >
-                        {tech}
+                        {item}
                       </span>
                     ))}
                   </div>

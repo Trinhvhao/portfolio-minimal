@@ -23,6 +23,7 @@ import { TechArsenalSection } from "@/src/components/app/sections/TechArsenalSec
 import { MarqueeBannerSection } from "@/src/components/app/sections/MarqueeBannerSection";
 import { FloatingVibeStation } from "@/src/components/app/FloatingVibeStation";
 import { ResumeSection } from "@/src/components/app/sections/ResumeSection";
+import { DynamicMetadata } from "@/src/components/app/DynamicMetadata";
 import { FileText } from "lucide-react";
 
 type SectionRevealConfig = {
@@ -151,6 +152,7 @@ export default function App() {
 
   return (
     <div className="relative min-h-screen bg-bg-dark text-text-light selection:bg-white selection:text-black">
+      <DynamicMetadata />
       <FilmGrain />
       <AnimatePresence>
         {isLoading && (
@@ -183,56 +185,83 @@ export default function App() {
         ))}
       </div>
 
-      <HeroSection />
+      <div data-section="hero">
+        <HeroSection />
+      </div>
       <div className="section-compact-flow">
-        <SectionReveal index={0}>
-          <AboutSection />
-        </SectionReveal>
-        <SectionReveal index={1}>
-          <CapabilitiesSection />
-        </SectionReveal>
-        <SectionReveal index={2}>
-          <ProcessSection />
-        </SectionReveal>
-        <SectionReveal index={3}>
-          <ExperienceSection />
-        </SectionReveal>
-        <SectionReveal index={4}>
-          <TechArsenalSection />
-        </SectionReveal>
-        <SectionReveal index={5}>
-          <ProjectsSection />
-        </SectionReveal>
-        <SectionReveal index={6}>
-          <TimelineSkillsSection />
-        </SectionReveal>
-        <SectionReveal index={7}>
-          <CertificationShowcaseSection />
-        </SectionReveal>
-        <SectionReveal index={8}>
-          <TestimonialsSection />
-        </SectionReveal>
-        <SectionReveal index={9}>
-          <OpenSourceSection />
-        </SectionReveal>
-        <SectionReveal index={10}>
-          <ArchiveSection />
-        </SectionReveal>
-        <SectionReveal index={11}>
-          <MarqueeBannerSection />
-        </SectionReveal>
-        <SectionReveal index={12}>
-          <AiFutureSection />
-        </SectionReveal>
-        <SectionReveal index={13}>
-          <DigitalPresenceSection />
-        </SectionReveal>
-        <SectionReveal index={14}>
-          <InspirationSection />
-        </SectionReveal>
-        <SectionReveal index={15}>
-          <ContactSection />
-        </SectionReveal>
+        {/* Hook & Value (Positioning & Core Proof) */}
+        <div className="section-band section-band--a section-stack">
+          <SectionReveal index={0}>
+            <div data-section="about">
+              <AboutSection />
+            </div>
+          </SectionReveal>
+          <SectionReveal index={1}>
+            <DigitalPresenceSection />
+          </SectionReveal>
+          <SectionReveal index={2}>
+            <CapabilitiesSection />
+          </SectionReveal>
+          <SectionReveal index={3}>
+            <div data-section="projects">
+              <ProjectsSection />
+            </div>
+          </SectionReveal>
+        </div>
+
+        {/* Experience & Skills (Deep Professional Proof) */}
+        <div className="section-band section-band--b section-stack">
+          <SectionReveal index={4}>
+            <div data-section="experience">
+              <ExperienceSection />
+            </div>
+          </SectionReveal>
+          <SectionReveal index={5}>
+            <div data-section="skills">
+              <TimelineSkillsSection />
+            </div>
+          </SectionReveal>
+          <SectionReveal index={6}>
+            <TechArsenalSection />
+          </SectionReveal>
+          <SectionReveal index={7}>
+            <ArchiveSection />
+          </SectionReveal>
+          <SectionReveal index={8}>
+            <MarqueeBannerSection />
+          </SectionReveal>
+        </div>
+
+        {/* Vision & Methodology (Philosophy & Process) */}
+        <div className="section-band section-band--c section-stack">
+          <SectionReveal index={9}>
+            <ProcessSection />
+          </SectionReveal>
+          <SectionReveal index={10}>
+            <AiFutureSection />
+          </SectionReveal>
+          <SectionReveal index={11}>
+            <InspirationSection />
+          </SectionReveal>
+          <SectionReveal index={12}>
+            <OpenSourceSection />
+          </SectionReveal>
+        </div>
+
+        {/* Credibility & Conversion (Trust & CTA) */}
+        <div className="section-band section-band--a section-stack">
+          <SectionReveal index={13}>
+            <TestimonialsSection />
+          </SectionReveal>
+          <SectionReveal index={14}>
+            <CertificationShowcaseSection />
+          </SectionReveal>
+          <SectionReveal index={15}>
+            <div data-section="contact">
+              <ContactSection />
+            </div>
+          </SectionReveal>
+        </div>
       </div>
       <FloatingVibeStation />
       <FloatingDock />

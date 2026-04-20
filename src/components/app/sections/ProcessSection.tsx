@@ -94,14 +94,14 @@ export const ProcessSection = React.memo(function ProcessSection() {
         PROCESS
       </motion.h2>
 
-      <div className="flex flex-col md:flex-row gap-12 md:gap-24 relative">
-        <div className="w-full md:w-1/2 hidden md:block">
-          <div className="sticky top-32 w-full aspect-square rounded-xl overflow-hidden shadow-2xl">
+      <div className="flex flex-col md:flex-row gap-12 md:gap-16 relative">
+        <div className="w-full md:w-5/12 hidden md:block">
+          <div className="sticky top-28 w-full max-w-[420px] mx-auto xl:ml-auto xl:mr-0 aspect-square rounded-xl overflow-hidden shadow-2xl">
             <ProcessVisual activeStep={activeStep} />
           </div>
         </div>
 
-        <div className="w-full md:w-1/2 flex flex-col pb-32">
+        <div className="w-full md:w-7/12 flex flex-col pb-32">
           {processData.map((step, index) => {
             const isActive = activeStep === index;
             return (
@@ -115,7 +115,7 @@ export const ProcessSection = React.memo(function ProcessSection() {
                   isActive ? "opacity-100 scale-100" : "opacity-20 scale-95",
                 )}
               >
-                <div className="md:hidden w-full aspect-square mb-8 rounded-xl overflow-hidden shadow-2xl">
+                <div className="md:hidden w-full max-w-[360px] aspect-square mb-8 rounded-xl overflow-hidden shadow-2xl mx-auto">
                   <ProcessVisual activeStep={index} />
                 </div>
 
