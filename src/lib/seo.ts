@@ -41,13 +41,15 @@ export interface ProjectSchema {
     keywords: string[];
 }
 
+const SITE_URL = "https://hayyie.click";
+
 export const personSchema: PersonSchema = {
     "@context": "https://schema.org",
     "@type": "Person",
     name: "Trịnh Văn Hào",
     jobTitle: "Full Stack Developer",
-    url: "https://portfolio-minimal-gilt.vercel.app/",
-    image: "https://portfolio-minimal-gilt.vercel.app/images/trinhhao3.jpg",
+    url: `${SITE_URL}/`,
+    image: `${SITE_URL}/images/trinhhao3.jpg`,
     sameAs: [
         // Add your social media profiles here for better branded search
         // "https://github.com/yourusername",
@@ -75,7 +77,7 @@ export const websiteSchema: WebsiteSchema = {
     "@context": "https://schema.org",
     "@type": "WebSite",
     name: "Trịnh Văn Hào Portfolio",
-    url: "https://portfolio-minimal-gilt.vercel.app/",
+    url: `${SITE_URL}/`,
     description: "Trịnh Văn Hào - Full Stack Developer Portfolio. Personal portfolio showcasing frontend projects, creative interfaces, and product development experience.",
     author: {
         "@type": "Person",

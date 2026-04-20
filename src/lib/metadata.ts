@@ -13,6 +13,8 @@ export interface MetadataConfig {
     canonical?: string;
 }
 
+const SITE_URL = "https://hayyie.click";
+
 // Default metadata
 export const defaultMetadata: MetadataConfig = {
     title: "Trịnh Văn Hào – Full Stack Developer | Code, Product Thinking & AI",
@@ -20,11 +22,11 @@ export const defaultMetadata: MetadataConfig = {
     keywords: "Trịnh Văn Hào, Trinh Van Hao, Hao Trinh, Full Stack Developer, Frontend Developer, React Developer, TypeScript, Next.js, Portfolio, Web Development, UI/UX, Motion Design, GSAP, Three.js, Vietnam Developer, Vietnamese Developer, Product Thinking, AI, Creative Development, Tư duy sản phẩm",
     ogTitle: "Trịnh Văn Hào – Full Stack Developer | Code, Product Thinking & AI",
     ogDescription: "Kết hợp tư duy sản phẩm, sáng tạo và AI để xây dựng trải nghiệm web độc đáo. Portfolio của Trịnh Văn Hào - Full Stack Developer.",
-    ogImage: "https://portfolio-minimal-gilt.vercel.app/images/trinhhao3.jpg",
+    ogImage: `${SITE_URL}/images/trinhhao3.jpg`,
     twitterTitle: "Trịnh Văn Hào – Full Stack Developer | Code, Product Thinking & AI",
     twitterDescription: "Kết hợp tư duy sản phẩm, sáng tạo và AI để xây dựng trải nghiệm web độc đáo. Portfolio của Trịnh Văn Hào - Full Stack Developer.",
-    twitterImage: "https://portfolio-minimal-gilt.vercel.app/images/trinhhao3.jpg",
-    canonical: "https://portfolio-minimal-gilt.vercel.app/"
+    twitterImage: `${SITE_URL}/images/trinhhao3.jpg`,
+    canonical: `${SITE_URL}/`
 };
 
 /**
@@ -128,7 +130,7 @@ export function resetMetadata(): void {
  * Generate metadata for a specific section
  */
 export function getSectionMetadata(section: string): MetadataConfig {
-    const baseUrl = "https://portfolio-minimal-gilt.vercel.app";
+    const baseUrl = SITE_URL;
 
     const sectionMetadata: Record<string, MetadataConfig> = {
         about: {
