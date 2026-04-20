@@ -4,47 +4,47 @@
   
   <!-- Main Portfolio Page -->
   <url>
-    <loc>https://hayyie.click/</loc>
+    <loc>https://www.hayyie.click/</loc>
     <lastmod>2026-04-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>
-      <image:loc>https://hayyie.click/images/trinhhao3.jpg</image:loc>
+      <image:loc>https://www.hayyie.click/images/trinhhao3.jpg</image:loc>
       <image:title>Trinh Van Hao - Full Stack Developer</image:title>
     </image:image>
   </url>
   
   <!-- Section anchors for better indexing -->
   <url>
-    <loc>https://hayyie.click/#about</loc>
+    <loc>https://www.hayyie.click/#about</loc>
     <lastmod>2026-04-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>https://hayyie.click/#projects</loc>
+    <loc>https://www.hayyie.click/#projects</loc>
     <lastmod>2026-04-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   
   <url>
-    <loc>https://hayyie.click/#experience</loc>
+    <loc>https://www.hayyie.click/#experience</loc>
     <lastmod>2026-04-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>https://hayyie.click/#skills</loc>
+    <loc>https://www.hayyie.click/#skills</loc>
     <lastmod>2026-04-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
-    <loc>https://hayyie.click/#contact</loc>
+    <loc>https://www.hayyie.click/#contact</loc>
     <lastmod>2026-04-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>

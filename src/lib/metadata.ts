@@ -13,7 +13,7 @@ export interface MetadataConfig {
     canonical?: string;
 }
 
-const SITE_URL = "https://hayyie.click";
+const SITE_URL = "https://www.hayyie.click";
 
 // Default metadata
 export const defaultMetadata: MetadataConfig = {

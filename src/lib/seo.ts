@@ -41,7 +41,7 @@ export interface ProjectSchema {
     keywords: string[];
 }
 
-const SITE_URL = "https://hayyie.click";
+const SITE_URL = "https://www.hayyie.click";
 
 export const personSchema: PersonSchema = {
     "@context": "https://schema.org",
