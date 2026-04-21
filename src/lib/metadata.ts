@@ -4,6 +4,7 @@ export interface MetadataConfig {
     title?: string;
     description?: string;
     keywords?: string;
+    fbAppId?: string;
     ogTitle?: string;
     ogDescription?: string;
     ogImage?: string;
@@ -21,6 +22,7 @@ export const defaultMetadata: MetadataConfig = {
     title: "Trịnh Văn Hào – Full Stack Developer | Code, Product Thinking & AI",
     description: "Kết hợp tư duy sản phẩm, sáng tạo và AI để xây dựng trải nghiệm web độc đáo. Portfolio của Trịnh Văn Hào - Full Stack Developer.",
     keywords: "Trịnh Văn Hào, Trinh Van Hao, Hao Trinh, Full Stack Developer, Frontend Developer, React Developer, TypeScript, Next.js, Portfolio, Web Development, UI/UX, Motion Design, GSAP, Three.js, Vietnam Developer, Vietnamese Developer, Product Thinking, AI, Creative Development, Tư duy sản phẩm",
+    fbAppId: "2714831052216688",
     ogTitle: "Trịnh Văn Hào – Full Stack Developer | Code, Product Thinking & AI",
     ogDescription: "Kết hợp tư duy sản phẩm, sáng tạo và AI để xây dựng trải nghiệm web độc đáo. Portfolio của Trịnh Văn Hào - Full Stack Developer.",
     ogImage: `${SITE_URL}/images/og-cover-1200x630.jpg`,
@@ -93,6 +95,10 @@ export function updateMetadata(config: MetadataConfig): void {
 
     if (metadata.keywords) {
         updateMetaTag('meta[name="keywords"]', metadata.keywords);
+    }
+
+    if (metadata.fbAppId) {
+        updateMetaTag('meta[property="fb:app_id"]', metadata.fbAppId);
     }
 
     // Update Open Graph tags
