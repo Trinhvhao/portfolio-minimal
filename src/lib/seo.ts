@@ -49,7 +49,7 @@ export const personSchema: PersonSchema = {
     name: "Trịnh Văn Hào",
     jobTitle: "Full Stack Developer",
     url: `${SITE_URL}/`,
-    image: `${SITE_URL}/images/trinhhao3.jpg`,
+    image: `${SITE_URL}/images/og-cover-1200x630.jpg`,
     sameAs: [
         // Add your social media profiles here for better branded search
         // "https://github.com/yourusername",

@@ -1,4 +1,10 @@
 # robots.txt for Trinh Van Hao Portfolio
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Facebot
+Allow: /
+
 User-agent: *
 Allow: /
 Disallow: /api/
@@ -6,6 +12,3 @@ Disallow: /*.json$
 
 # Sitemap location
 Sitemap: https://www.hayyie.click/sitemap.xml
-
-# Crawl-delay for polite crawling
-Crawl-delay: 1

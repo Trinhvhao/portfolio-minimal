@@ -23,10 +23,10 @@ export const defaultMetadata: MetadataConfig = {
     keywords: "Trịnh Văn Hào, Trinh Van Hao, Hao Trinh, Full Stack Developer, Frontend Developer, React Developer, TypeScript, Next.js, Portfolio, Web Development, UI/UX, Motion Design, GSAP, Three.js, Vietnam Developer, Vietnamese Developer, Product Thinking, AI, Creative Development, Tư duy sản phẩm",
     ogTitle: "Trịnh Văn Hào – Full Stack Developer | Code, Product Thinking & AI",
     ogDescription: "Kết hợp tư duy sản phẩm, sáng tạo và AI để xây dựng trải nghiệm web độc đáo. Portfolio của Trịnh Văn Hào - Full Stack Developer.",
-    ogImage: `${SITE_URL}/images/trinhhao3.jpg`,
+    ogImage: `${SITE_URL}/images/og-cover-1200x630.jpg`,
     twitterTitle: "Trịnh Văn Hào – Full Stack Developer | Code, Product Thinking & AI",
     twitterDescription: "Kết hợp tư duy sản phẩm, sáng tạo và AI để xây dựng trải nghiệm web độc đáo. Portfolio của Trịnh Văn Hào - Full Stack Developer.",
-    twitterImage: `${SITE_URL}/images/trinhhao3.jpg`,
+    twitterImage: `${SITE_URL}/images/og-cover-1200x630.jpg`,
     twitterCard: "summary_large_image",
     canonical: `${SITE_URL}/`
 };
